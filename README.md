@@ -1,373 +1,579 @@
-# URL Shortener
+# WP URL Shortener
+
+> ⚠️ **STATUS DO PROJETO:** Em Desenvolvimento Ativo - 50% Completo
+> 
+> **Última Atualização:** 05/01/2026  
+> **Versão Atual:** 0.5.0-dev  
+> **Sprint Atual:** 1 de 6
+
+---
+
+## 🚧 Aviso Importante
+
+Este plugin está **em desenvolvimento ativo** e **não está pronto para uso em produção**. 
+
+### Status Atual:
+- ✅ **9 arquivos criados** (50%)
+- ❌ **7 arquivos pendentes** (necessários para funcionamento)
+- 📝 **Documentação:** 78% completa
+
+### Arquivos Pendentes Críticos:
+1. `includes/class-admin.php` ❌
+2. `includes/class-shortcode-generator.php` ❌
+3. `includes/class-redirector.php` ❌
+4. `includes/class-admin-columns.php` ❌
+5. `admin/settings-page.php` ❌
+6. `assets/css/admin.css` ❌
+7. `assets/css/columns.css` ❌
+8. `assets/js/admin.js` ❌
+
+**⚠️ O plugin NÃO funcionará até que todos os arquivos sejam criados.**
+
+---
+
+## 📋 Índice
+
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Status de Desenvolvimento](#-status-de-desenvolvimento)
+- [Funcionalidades Planejadas](#-funcionalidades-planejadas)
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação (Quando Pronto)](#-instalação-quando-pronto)
+- [Roadmap](#-roadmap)
+- [Estrutura do Código](#-estrutura-do-código)
+- [Contribuindo](#-contribuindo)
+- [Documentação](#-documentação)
+- [Licença](#-licença)
+
+---
+
+## 🎯 Sobre o Projeto
 
 Plugin WordPress para criação e gerenciamento de URLs curtas para posts, páginas, categorias, tags e custom post types.
 
-## 📋 Características Atuais (v1.0.0)
+### Conceito
 
-### ✅ Funcionalidades Implementadas
+Transforma URLs longas em códigos curtos para facilitar compartilhamento:
 
-- **Geração Automática de URLs Curtas**
-  - URLs curtas geradas automaticamente na publicação de conteúdo
-  - Suporte para Posts, Páginas, Custom Post Types, Categorias e Tags
-  - Configuração flexível via checkboxes no painel administrativo
-
-- **Formato de URL**
-  - URLs curtas na raiz do domínio: `exemplo.com.br/abc123`
-  - Códigos de 5-7 caracteres usando Base62 (a-z, A-Z, 0-9)
-  - Geração baseada no ID do conteúdo (sempre o mesmo código para o mesmo item)
-
-- **Interface Administrativa**
-  - Página de configurações em Configurações > URL Shortener
-  - Seleção de post types e taxonomias para geração automática
-  - Detecção automática de Custom Post Types públicos
-  - Botões de geração retroativa por tipo de conteúdo
-
-- **Colunas nas Listagens**
-  - Coluna "URL Curta" nas tabelas de posts (após a coluna "Data")
-  - Coluna "URL Curta" nas tabelas de termos (após a coluna "Slug")
-  - Botão de copiar com feedback visual "Copiado!"
-  - Compatível com telas responsivas
-
-- **Redirecionamento**
-  - Redirecionamento 301 (permanente) para SEO
-  - Sistema de rewrite rules otimizado
-  - Tratamento de erro 404 para códigos inexistentes
-
-- **Arquitetura**
-  - Código modular e orientado a objetos
-  - Namespace PHP para evitar conflitos
-  - Estrutura organizada em classes separadas
-  - Hooks e filtros para extensibilidade
-
-## 📁 Estrutura de Arquivos
-
+**Antes:**
 ```
-url-shortener/
-├── url-shortener.php          # Arquivo principal do plugin
-├── README.md                      # Este arquivo
-├── includes/                      # Classes principais
-│   ├── class-url-shortener.php   # Classe principal
-│   ├── class-admin.php            # Interface administrativa
-│   ├── class-shortcode-generator.php  # Gerador de códigos
-│   ├── class-redirector.php      # Sistema de redirecionamento
-│   └── class-admin-columns.php   # Colunas personalizadas
-├── admin/                         # Templates administrativos
-│   └── settings-page.php         # Página de configurações
-└── assets/                        # Assets estáticos
-    ├── css/
-    │   ├── admin.css             # Estilos da página de configurações
-    │   └── columns.css           # Estilos das colunas
-    └── js/
-        ├── admin.js              # JavaScript da página de configurações
-        └── columns.js            # JavaScript das colunas (copiar URL)
+https://meusite.com.br/2026/01/05/como-criar-um-plugin-wordpress-completo/
 ```
 
-## 🚀 Instalação
+**Depois:**
+```
+https://meusite.com.br/abc123
+```
 
-1. Faça upload da pasta `url-shortener` para `/wp-content/plugins/`
-2. Ative o plugin através do menu 'Plugins' no WordPress
-3. Acesse Configurações > URL Shortener para configurar
-4. Selecione os tipos de conteúdo que devem ter URLs curtas
-5. Use os botões de geração em massa para conteúdo existente
+### Por Que Este Plugin?
 
-## ⚙️ Configuração
-
-### Configurações Básicas
-
-1. Acesse **Configurações > URL Shortener**
-2. Marque os **Post Types** que devem ter URLs curtas geradas automaticamente
-3. Marque as **Taxonomias** que devem ter URLs curtas geradas automaticamente
-4. Clique em **Salvar Configurações**
-
-### Geração Retroativa
-
-Na mesma página de configurações:
-1. Role até a seção "Gerar URLs Curtas para Conteúdo Existente"
-2. Clique nos botões correspondentes aos tipos de conteúdo
-3. O número entre parênteses indica quantos itens existem
-4. Uma mensagem de sucesso mostrará quantas URLs foram geradas
-
-### Usando as URLs Curtas
-
-As URLs curtas aparecem automaticamente nas listagens:
-- **Posts/Páginas**: coluna "URL Curta" após a coluna "Data"
-- **Categorias/Tags**: coluna "URL Curta" após a coluna "Slug"
-
-Para copiar uma URL:
-1. Clique no botão com ícone de página
-2. A mensagem "Copiado!" confirmará a ação
-3. A URL completa estará na área de transferência
-
-## 🔧 Detalhes Técnicos
-
-### Algoritmo de Geração
-
-- **Base62**: Usa caracteres a-z, A-Z, 0-9
-- **Baseado em ID**: Cada ID gera sempre o mesmo código
-- **Salt por tipo**: Posts e termos usam salts diferentes para evitar colisões
-- **Comprimento**: 5-7 caracteres (padding para garantir mínimo de 5)
-
-### Banco de Dados
-
-O plugin cria uma tabela `url_shortener`:
-- `id`: ID único auto-incremento
-- `short_code`: Código curto (único)
-- `object_id`: ID do objeto (post/term)
-- `object_type`: Tipo do objeto ('post' ou 'term')
-- `created_at`: Data de criação
-
-### Metadados
-
-- Posts: `_wpus_short_code` (post_meta)
-- Termos: `_wpus_short_code` (term_meta)
-
-### Hooks Disponíveis
-
-#### Actions
-- `wpus_short_url_clicked`: Disparado quando uma URL curta é acessada
-  - Parâmetros: `$short_code`, `$id`
-
-#### Filters
-*Nenhum filter público ainda - preparado para extensões futuras*
-
-## 📈 Próximos Passos e Funcionalidades Futuras
-
-### 1. Dashboard de Analytics (Alta Prioridade)
-
-**Objetivo**: Rastreamento completo de cliques nas URLs curtas
-
-**Funcionalidades**:
-- Contador de cliques por URL
-- Data e hora de cada clique
-- IP do visitante (com anonimização LGPD)
-- User Agent (navegador/dispositivo)
-- Referrer (de onde veio o visitante)
-- Geolocalização básica (país/cidade)
-- Gráficos de visualização:
-  - Cliques ao longo do tempo
-  - Top URLs mais clicadas
-  - Origem do tráfego
-  - Dispositivos mais usados
-
-**Implementação Técnica**:
-- Nova tabela `url_shortener_clicks`
-- Registro assíncrono para não afetar performance
-- Agregação de dados para otimizar consultas
-- Export de dados em CSV
-
-**Interface**:
-- Menu "Analytics" no painel do WordPress
-- Filtros por data, tipo de conteúdo, URL específica
-- Widgets no dashboard principal
+- ✅ **Economia de Caracteres:** Ideal para Twitter, SMS, materiais impressos
+- ✅ **URLs Limpas:** Mais profissionais e fáceis de lembrar
+- ✅ **SEO Friendly:** Redirecionamento 301 (permanente)
+- ✅ **Privacidade:** Seus dados ficam no seu servidor
+- ✅ **Gratuito:** Código aberto, GPL v2
 
 ---
 
-### 2. Gerenciamento Avançado de URLs (Média Prioridade)
+## 📊 Status de Desenvolvimento
 
-**Objetivo**: Controle total sobre as URLs curtas criadas
+### Sprint 1: Arquivos Base (EM ANDAMENTO - 50%)
 
-**Funcionalidades**:
-- Página "Todas as URLs Curtas"
-  - Listagem completa com busca e filtros
-  - Informações: código, destino, data de criação, cliques
-  - Ações em massa: excluir, regenerar
-- Edição manual de códigos
-  - Permitir customizar o código curto
-  - Validação de unicidade
-  - Prevenção de conflitos
+**Objetivo:** Criar todos os arquivos necessários para funcionamento básico
+
+#### ✅ Concluído (9 arquivos)
+
+**Estrutura e Configuração:**
+- [x] `wp-url-shortener.php` - Arquivo principal
+- [x] `includes/class-url-shortener.php` - Classe principal
+- [x] `.gitignore` - Controle de versionamento
+- [x] `LICENSE` - Licença GPL v2
+
+**JavaScript:**
+- [x] `assets/js/columns.js` - Copiar URL para clipboard
+
+**Documentação (78% completa):**
+- [x] `EXAMPLES.md` - Exemplos de uso e código
+- [x] `CHANGELOG.md` - Histórico de versões
+- [x] `STRUCTURE.md` - Arquitetura técnica
+- [x] `DESENVOLVIMENTO.md` - Controle de sprints
+- [x] `CHECKLIST-ARQUIVOS.md` - Verificação de arquivos
+- [x] `INSTALLATION.md` - Guia completo de instalação
+- [ ] `README.md` - Este arquivo (em atualização)
+
+#### ❌ Pendente (8 arquivos)
+
+**Classes PHP Críticas:**
+- [ ] `includes/class-admin.php` - Interface administrativa
+- [ ] `includes/class-shortcode-generator.php` - Algoritmo Base62
+- [ ] `includes/class-redirector.php` - Sistema de redirecionamento
+- [ ] `includes/class-admin-columns.php` - Colunas personalizadas
+
+**Templates:**
+- [ ] `admin/settings-page.php` - Página de configurações
+
+**Estilos:**
+- [ ] `assets/css/admin.css` - Estilos da página admin
+- [ ] `assets/css/columns.css` - Estilos das colunas
+
+**JavaScript:**
+- [ ] `assets/js/admin.js` - Geração em massa via AJAX
+
+---
+
+### Próximas Sprints
+
+#### Sprint 2: Testes e Refinamentos (PLANEJADA)
+- Testes completos de funcionalidade
+- Otimizações de performance
+- Correção de bugs
+- Melhorias de UX
+
+#### Sprint 3: Dashboard de Analytics (PLANEJADA)
+- Tracking de cliques
+- Estatísticas e gráficos
+- Export de dados
+- Top URLs mais acessadas
+
+#### Sprint 4: Gerenciamento de URLs (PLANEJADA)
+- Página "Todas as URLs"
+- Edição de códigos curtos
 - Exclusão de URLs
-  - Opção de excluir URLs não utilizadas
-  - Confirmação antes de excluir
-  - Limpeza automática de URLs órfãs
-- Estatísticas gerais
-  - Total de URLs ativas
-  - URLs criadas hoje/semana/mês
-  - Taxa de utilização
+- Busca e filtros avançados
 
-**Interface**:
-- Menu "URL Shortener" > "Todas as URLs"
-- Integração com WP_List_Table
-- Bulk actions nativas do WordPress
+#### Sprint 5: Compatibilidade SEO (PLANEJADA)
+- Integração com Yoast SEO
+- Integração com Rank Math
+- Integração com All in One SEO
 
----
-
-### 3. Compatibilidade com Plugins de SEO (Média Prioridade)
-
-**Objetivo**: Integração nativa com principais plugins de SEO
-
-**Yoast SEO**:
-- Adicionar campo "URL Curta" no metabox do Yoast
-- Copiar URL curta diretamente do editor de posts
-- Sugestão automática de URL curta para compartilhamento
-- Integração com análise de compartilhamento social
-
-**Rank Math**:
-- Campo "URL Curta" no painel Rank Math
-- Shortcode para inserir URL curta no conteúdo
-- Suporte a Schema.org com URLs curtas
-- Integração com módulo de compartilhamento
-
-**All in One SEO**:
-- Metabox customizado com URL curta
-- Preview de compartilhamento com URL curta
-- Sugestões de otimização considerando URL curta
-
-**Implementação Técnica**:
-- Hooks nos metaboxes dos plugins
-- JavaScript para integração de UI
-- API de compartilhamento dos plugins
-- Testes de compatibilidade por versão
+#### Sprint 6: Funcionalidades Premium (PLANEJADA)
+- QR Code Generator
+- Expiração de URLs
+- Proteção por senha
+- Domínio customizado externo
 
 ---
 
-### 4. Funcionalidades Adicionais
+## 🎯 Funcionalidades Planejadas
 
-#### 4.1 QR Code Generator
-- Geração automática de QR Code para cada URL curta
-- Download em PNG, SVG
-- Customização de cores e tamanho
-- Útil para materiais impressos
+### Versão 1.0 (Sprint 1-2) - EM DESENVOLVIMENTO
 
-#### 4.2 Expiração de URLs
-- Opção de definir data de expiração
-- Redirecionamento customizado após expiração
-- Notificação antes de expirar
-- Útil para campanhas temporárias
+**Geração de URLs:**
+- [ ] Geração automática ao publicar posts
+- [ ] Geração automática ao criar categorias/tags
+- [ ] Algoritmo Base62 (5-7 caracteres)
+- [ ] Códigos baseados em ID (determinísticos)
+- [ ] Suporte a Custom Post Types
+- [ ] Geração retroativa em massa
 
-#### 4.3 Proteção por Senha
-- URLs curtas protegidas por senha
-- Útil para conteúdo exclusivo/premium
-- Integração com membership plugins
+**Interface Administrativa:**
+- [ ] Página de configurações em Configurações > URL Shortener
+- [ ] Checkboxes para habilitar post types
+- [ ] Checkboxes para habilitar taxonomias
+- [ ] Botões de geração em massa
 
-#### 4.4 Domínio Customizado Externo
-- Suporte a domínios curtos personalizados (ex: `exem.plo/abc123`)
-- Configuração de DNS
-- Múltiplos domínios
-- Útil para branding
+**Listagens:**
+- [ ] Coluna "URL Curta" em posts (após coluna "Data")
+- [ ] Coluna "URL Curta" em termos (após coluna "Slug")
+- [ ] Botão de copiar URL
+- [ ] Feedback visual "Copiado!"
 
-#### 4.5 Integração com Redes Sociais
-- Botões de compartilhamento com URL curta
-- Meta tags Open Graph automáticas
-- Twitter Cards otimizados
-- Preview de compartilhamento
+**Redirecionamento:**
+- [ ] Redirecionamento 301 (permanente)
+- [ ] URLs na raiz do domínio (exemplo.com.br/abc123)
+- [ ] Tratamento de erro 404 para códigos inválidos
 
-#### 4.6 API REST
-- Endpoints para criar URLs curtas programaticamente
-- Obter estatísticas via API
-- Integração com ferramentas externas
-- Documentação completa
+**Banco de Dados:**
+- [ ] Tabela `wp_url_shortener`
+- [ ] Post meta `_wpus_short_code`
+- [ ] Term meta `_wpus_short_code`
+- [ ] Índices otimizados
 
-#### 4.7 Importação/Exportação
-- Importar URLs de outros serviços (bit.ly, TinyURL)
-- Exportar todas as URLs em CSV/JSON
-- Backup e restauração de dados
-- Migração facilitada
+### Versão 2.0 (Sprint 3) - PLANEJADA
 
-#### 4.8 Multisite Support
-- URLs curtas compartilhadas na rede
-- Configurações por site
-- Estatísticas consolidadas
-- Administração centralizada
+**Analytics:**
+- [ ] Tracking de cliques
+- [ ] IP anonimizado (LGPD/GDPR)
+- [ ] User Agent e Referrer
+- [ ] Dashboard com estatísticas
+- [ ] Gráficos interativos
+- [ ] Export CSV
 
----
+### Versão 2.1 (Sprint 4) - PLANEJADA
 
-### 5. Melhorias de Performance
+**Gerenciamento:**
+- [ ] Página "Todas as URLs"
+- [ ] Edição de códigos curtos
+- [ ] Exclusão individual/massa
+- [ ] Busca e filtros
+- [ ] Regeneração de URLs
 
-#### 5.1 Cache
-- Cache de redirecionamentos
-- Integração com plugins de cache
-- Object cache para consultas frequentes
-- Redução de queries ao banco
+### Versão 2.2 (Sprint 5) - PLANEJADA
 
-#### 5.2 CDN
-- Suporte a CDN para assets
-- Otimização de carregamento
-- Performance global
+**SEO Plugins:**
+- [ ] Yoast SEO integration
+- [ ] Rank Math integration
+- [ ] All in One SEO integration
+- [ ] Campo no editor de posts
+- [ ] Preview de compartilhamento
 
-#### 5.3 Lazy Loading
-- Carregamento sob demanda de estatísticas
-- Paginação otimizada
-- Requisições assíncronas
+### Versão 3.0 (Sprint 6) - PLANEJADA
 
----
-
-### 6. Segurança e Privacidade
-
-#### 6.1 LGPD/GDPR Compliance
-- Anonimização de IPs
-- Opt-in para tracking
-- Direito ao esquecimento
-- Exportação de dados pessoais
-
-#### 6.2 Rate Limiting
-- Proteção contra abuso
-- Limite de criação de URLs por tempo
-- Blacklist de IPs suspeitos
-
-#### 6.3 Spam Prevention
-- Validação de destinos
-- Prevenção de phishing
-- Lista de domínios bloqueados
+**Premium Features:**
+- [ ] QR Code Generator
+- [ ] URLs com expiração
+- [ ] Proteção por senha
+- [ ] Domínio externo customizado
+- [ ] API REST completa
+- [ ] Webhooks
 
 ---
 
-## 🗓️ Roadmap Sugerido
+## 📦 Pré-requisitos
 
-### Fase 1 (Curto Prazo - 1-2 meses)
-1. Dashboard de Analytics básico
-2. Página de gerenciamento de URLs
-3. Compatibilidade com Yoast SEO
+### Requisitos Mínimos
 
-### Fase 2 (Médio Prazo - 3-4 meses)
-1. Compatibilidade com Rank Math e AIOSEO
-2. QR Code Generator
-3. API REST básica
+- WordPress 5.0 ou superior
+- PHP 7.4 ou superior
+- MySQL 5.6 ou superior / MariaDB 10.0 ou superior
 
-### Fase 3 (Longo Prazo - 5-6 meses)
-1. Domínio customizado externo
-2. Expiração de URLs
-3. Multisite Support
-4. Melhorias de performance avançadas
+### Requisitos Recomendados
+
+- WordPress 6.0 ou superior
+- PHP 8.0 ou superior
+- MySQL 8.0 ou superior / MariaDB 10.5 ou superior
+- HTTPS habilitado (para clipboard API)
+
+---
+
+## 🚀 Instalação (Quando Pronto)
+
+> ⚠️ **ATENÇÃO:** Plugin ainda não está funcional. Aguarde a conclusão da Sprint 1.
+
+### Quando o Plugin Estiver Completo:
+
+1. **Download:**
+   ```bash
+   git clone https://github.com/seu-usuario/wp-url-shortener.git
+   ```
+
+2. **Upload:**
+   - Faça upload da pasta `wp-url-shortener` para `/wp-content/plugins/`
+
+3. **Ativação:**
+   - Ative em **Plugins > Plugins Instalados**
+
+4. **Configuração:**
+   - Acesse **Configurações > URL Shortener**
+   - Marque os tipos de conteúdo desejados
+   - Gere URLs para conteúdo existente
+
+5. **Uso:**
+   - URLs curtas são geradas automaticamente ao publicar
+   - Copie URLs nas listagens com um clique
+   - Compartilhe nas redes sociais
+
+**Documentação Completa:** Veja [INSTALLATION.md](INSTALLATION.md)
+
+---
+
+## 🗺️ Roadmap
+
+### Q1 2026
+
+**Janeiro:**
+- [x] ~~Sprint 1 iniciada~~ (05/01)
+- [ ] Sprint 1 concluída (meta: 15/01)
+- [ ] Sprint 2 iniciada (meta: 16/01)
+
+**Fevereiro:**
+- [ ] Sprint 2 concluída
+- [ ] Sprint 3 iniciada (Analytics)
+- [ ] Versão 1.0 BETA lançada
+
+**Março:**
+- [ ] Sprint 3 concluída
+- [ ] Sprint 4 iniciada (Gerenciamento)
+- [ ] Versão 2.0 lançada
+
+### Q2 2026
+
+**Abril:**
+- [ ] Sprint 4 concluída
+- [ ] Sprint 5 iniciada (SEO)
+
+**Maio:**
+- [ ] Sprint 5 concluída
+- [ ] Versão 2.2 lançada
+- [ ] Testes de stress
+
+**Junho:**
+- [ ] Sprint 6 iniciada (Premium)
+- [ ] Documentação em vídeo
+- [ ] Submissão para WordPress.org
+
+### Q3 2026
+
+**Julho-Setembro:**
+- [ ] Sprint 6 concluída
+- [ ] Versão 3.0 lançada
+- [ ] Marketing e divulgação
+- [ ] Suporte à comunidade
+
+---
+
+## 🏗️ Estrutura do Código
+
+### Arquitetura
+
+```
+wp-url-shortener/
+│
+├── wp-url-shortener.php          # Ponto de entrada
+│   ├── Define constantes
+│   ├── Autoloader de classes
+│   └── Hooks de ativação/desativação
+│
+├── includes/                      # Classes principais
+│   ├── class-url-shortener.php   # Singleton principal ✅
+│   ├── class-admin.php            # Interface admin ❌
+│   ├── class-shortcode-generator.php  # Base62 ❌
+│   ├── class-redirector.php      # Redirecionamento ❌
+│   └── class-admin-columns.php   # Colunas ❌
+│
+├── admin/                         # Templates
+│   └── settings-page.php         # Configurações ❌
+│
+└── assets/                        # Frontend
+    ├── css/
+    │   ├── admin.css             # Estilos admin ❌
+    │   └── columns.css           # Estilos colunas ❌
+    └── js/
+        ├── admin.js              # AJAX ❌
+        └── columns.js            # Copiar URL ✅
+```
+
+### Padrões de Código
+
+- **Namespace:** `WP_URL_Shortener\`
+- **Autoloading:** PSR-4 style
+- **Singleton:** Classe principal
+- **WordPress Coding Standards (WPCS)**
+- **Nomeação:** Descritiva e clara
+- **Documentação:** PHPDoc em métodos
+
+### Tecnologias
+
+- **Backend:** PHP 7.4+
+- **Frontend:** JavaScript (ES6+), CSS3
+- **Database:** MySQL/MariaDB
+- **Build:** Nativo WordPress (sem bundler)
 
 ---
 
 ## 🤝 Contribuindo
 
-Este é um projeto pessoal, mas sugestões e melhorias são bem-vindas!
+### Como Contribuir
 
-## 📝 Licença
+O projeto está em desenvolvimento inicial. Contribuições são bem-vindas!
 
-GPL v2 ou posterior
+#### Áreas que Precisam de Ajuda:
 
-## 👨‍💻 Autor
+1. **Código:**
+   - Implementar classes pendentes
+   - Otimizar algoritmos
+   - Testes unitários
 
-Desenvolvido com ❤️ para a comunidade WordPress
+2. **Documentação:**
+   - Melhorar exemplos
+   - Traduzir para outros idiomas
+   - Criar tutoriais em vídeo
+
+3. **Design:**
+   - Melhorar CSS
+   - Criar ícones
+   - UX/UI da interface admin
+
+4. **Testes:**
+   - Testar em diferentes ambientes
+   - Reportar bugs
+   - Sugerir melhorias
+
+#### Processo:
+
+```bash
+1. Fork o repositório
+2. Crie uma branch (git checkout -b feature/nova-funcionalidade)
+3. Commit suas mudanças (git commit -am 'Adiciona nova funcionalidade')
+4. Push para a branch (git push origin feature/nova-funcionalidade)
+5. Abra um Pull Request
+```
+
+### Diretrizes:
+
+- Seguir WordPress Coding Standards
+- Adicionar testes para novas funcionalidades
+- Atualizar documentação
+- Um commit por feature/fix
+- Mensagens de commit descritivas
 
 ---
 
-## 🐛 Bugs Conhecidos
+## 📚 Documentação
 
-*Nenhum bug conhecido na versão atual.*
+### Documentos Disponíveis
 
-## ❓ FAQ
+- **[INSTALLATION.md](INSTALLATION.md)** - Guia completo de instalação e início rápido
+- **[EXAMPLES.md](EXAMPLES.md)** - Exemplos de uso e snippets de código
+- **[STRUCTURE.md](STRUCTURE.md)** - Arquitetura técnica detalhada
+- **[CHANGELOG.md](CHANGELOG.md)** - Histórico de versões
+- **[DESENVOLVIMENTO.md](DESENVOLVIMENTO.md)** - Controle de sprints e tarefas
+- **[CHECKLIST-ARQUIVOS.md](CHECKLIST-ARQUIVOS.md)** - Status dos arquivos
 
-**P: As URLs curtas são permanentes?**
-R: Sim, desde que o conteúdo original não seja excluído.
+### Documentação Futura
 
-**P: Posso customizar o código curto?**
-R: Na versão atual não, mas está planejado para versões futuras.
+- [ ] API Reference
+- [ ] Hooks & Filters Guide
+- [ ] Developer Guide
+- [ ] User Manual
+- [ ] Video Tutorials
 
-**P: O plugin afeta a performance do site?**
-R: Não, o sistema de rewrite é otimizado e não adiciona queries desnecessárias.
+---
 
-**P: Funciona com Custom Post Types?**
-R: Sim, todos os CPTs públicos são detectados automaticamente.
+## 📊 Estatísticas do Projeto
 
-**P: É compatível com WPML/Polylang?**
-R: Na versão atual não há suporte específico para multilíngue, mas está nos planos futuros.
+### Desenvolvimento
+
+**Progresso Geral:** 50%
+
+**Código:**
+- PHP: 1/5 classes (20%)
+- CSS: 0/2 arquivos (0%)
+- JavaScript: 1/2 arquivos (50%)
+
+**Documentação:** 78%
+- 7 de 9 documentos completos
+
+**Testes:** 0%
+- Nenhum teste realizado ainda
+
+### Métricas de Código
+
+**Linhas de Código (atual):**
+- PHP: ~150 linhas
+- CSS: 0 linhas
+- JavaScript: ~60 linhas
+- **Total:** ~210 linhas
+
+**Linhas de Código (planejado):**
+- PHP: ~1.200 linhas
+- CSS: ~200 linhas
+- JavaScript: ~130 linhas
+- **Total:** ~1.530 linhas
+
+**Documentação:**
+- ~4.500 linhas (completo)
+
+---
+
+## 🐛 Issues e Bugs
+
+### Reportar Problemas
+
+Como o plugin está em desenvolvimento, não há bugs conhecidos ainda.
+
+Quando o plugin estiver funcional, reporte bugs incluindo:
+
+- [ ] Versão do WordPress
+- [ ] Versão do PHP
+- [ ] Tema utilizado
+- [ ] Plugins ativos
+- [ ] Mensagem de erro completa
+- [ ] Passos para reproduzir
+
+**Onde reportar:** [GitHub Issues](https://github.com/seu-usuario/wp-url-shortener/issues)
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a **GNU General Public License v2 ou posterior**.
+
+```
+Copyright (C) 2026 WP URL Shortener
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+```
+
+Veja o arquivo [LICENSE](LICENSE) para detalhes completos.
+
+### O que isso significa?
+
+✅ **Você PODE:**
+- Usar gratuitamente
+- Modificar o código
+- Distribuir (original ou modificado)
+- Usar comercialmente
+
+❌ **Você NÃO PODE:**
+- Remover créditos dos autores
+- Usar licença mais restritiva
+- Responsabilizar autores por danos
+
+---
+
+## 👨‍💻 Autor
+
+**Desenvolvido por:** [Seu Nome]  
+**GitHub:** [@seu-usuario](https://github.com/seu-usuario)  
+**Site:** [seusite.com](https://seusite.com)  
+**Email:** [seu-email@exemplo.com](mailto:seu-email@exemplo.com)
+
+---
+
+## 🙏 Agradecimentos
+
+- Comunidade WordPress
+- Contribuidores do projeto
+- Testadores beta (futuros)
 
 ---
 
 ## 📞 Suporte
 
-Para dúvidas ou problemas, abra uma issue no repositório do projeto.
+### Canais de Suporte (Quando Disponível)
+
+- **Documentação:** Leia primeiro os documentos acima
+- **GitHub Issues:** Para bugs e feature requests
+- **Email:** Para questões gerais
+- **Fórum WordPress:** Suporte da comunidade
+
+### Status de Desenvolvimento
+
+- **Fase Atual:** Desenvolvimento Inicial (Sprint 1)
+- **Status:** Em Andamento 🔄
+- **Disponível para Uso:** ❌ Ainda não
+- **Previsão de Lançamento BETA:** Fevereiro 2026
+
+---
+
+## 🌟 Dê uma Estrela!
+
+Se você gosta da ideia deste projeto, considere dar uma ⭐ no GitHub!
+
+---
+
+## 📝 Notas Finais
+
+Este é um projeto **em desenvolvimento ativo**. As informações neste README refletem o estado atual e os planos futuros.
+
+**Última Atualização:** 05/01/2026  
+**Versão do README:** 0.5.0
+
+**Próxima Atualização:** Após conclusão da Sprint 1
+
+---
+
+**Desenvolvido com ❤️ para a comunidade WordPress**
