@@ -11,9 +11,9 @@ if (!defined('ABSPATH')) {
         
         <!-- Seção de Configurações -->
         <div class="wpus-card">
-            <h2><?php _e('Configurações de Geração Automática', 'url-shortener-by-melk'); ?></h2>
+            <h2><?php esc_html_e('Configurações de Geração Automática', 'url-shortener-by-melk'); ?></h2>
             <p class="description">
-                <?php _e('Selecione os tipos de conteúdo que devem ter URLs curtas geradas automaticamente ao serem publicados.', 'url-shortener-by-melk'); ?>
+                <?php esc_html_e('Selecione os tipos de conteúdo que devem ter URLs curtas geradas automaticamente ao serem publicados.', 'url-shortener-by-melk'); ?>
             </p>
             
             <form method="post" action="">
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <?php _e('Post Types', 'url-shortener-by-melk'); ?>
+                            <?php esc_html_e('Post Types', 'url-shortener-by-melk'); ?>
                         </th>
                         <td>
                             <fieldset>
@@ -88,13 +88,13 @@ if (!defined('ABSPATH')) {
 
         <!-- Seção de Geração Retroativa -->
         <div class="wpus-card">
-            <h2><?php _e('Gerar URLs Curtas para Conteúdo Existente', 'url-shortener-by-melk'); ?></h2>
+            <h2><?php esc_html_e('Gerar URLs Curtas para Conteúdo Existente', 'url-shortener-by-melk'); ?></h2>
             <p class="description">
-                <?php _e('Use os botões abaixo para gerar URLs curtas para todo o conteúdo já publicado que ainda não possui uma URL curta.', 'url-shortener-by-melk'); ?>
+                <?php esc_html_e('Use os botões abaixo para gerar URLs curtas para todo o conteúdo já publicado que ainda não possui uma URL curta.', 'url-shortener-by-melk'); ?>
             </p>
             
             <div class="wpus-bulk-actions">
-                <h3><?php _e('Post Types', 'url-shortener-by-melk'); ?></h3>
+                <h3><?php esc_html_e('Post Types', 'url-shortener-by-melk'); ?></h3>
                 <div class="wpus-button-group">
                     <?php foreach ($post_types as $post_type) : ?>
                         <?php if ($post_type->name === 'attachment') continue; ?>
@@ -142,13 +142,13 @@ if (!defined('ABSPATH')) {
 
         <!-- Seção de Informações -->
         <div class="wpus-card wpus-info-card">
-            <h2><?php _e('Como Funciona', 'url-shortener-by-melk'); ?></h2>
+            <h2><?php esc_html_e('Como Funciona', 'url-shortener-by-melk'); ?></h2>
             <ul>
-                <li><?php _e('URLs curtas são geradas usando Base62 (letras maiúsculas, minúsculas e números).', 'url-shortener-by-melk'); ?></li>
-                <li><?php _e('Cada URL curta tem entre 5-7 caracteres e é baseada no ID do conteúdo, garantindo consistência.', 'url-shortener-by-melk'); ?></li>
-                <li><?php _e('As URLs curtas aparecem na raiz do seu domínio: exemplo.com.br/abc123', 'url-shortener-by-melk'); ?></li>
-                <li><?php _e('Você pode copiar URLs curtas diretamente das tabelas de listagem de posts e termos.', 'url-shortener-by-melk'); ?></li>
-                <li><?php _e('Todos os redirecionamentos usam código 301 (permanente) para SEO.', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('URLs curtas são geradas usando Base62 (letras maiúsculas, minúsculas e números).', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('Cada URL curta tem entre 5-7 caracteres e é baseada no ID do conteúdo, garantindo consistência.', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('As URLs curtas aparecem na raiz do seu domínio: exemplo.com.br/abc123', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('Você pode copiar URLs curtas diretamente das tabelas de listagem de posts e termos.', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('Todos os redirecionamentos usam código 301 (permanente) para SEO.', 'url-shortener-by-melk'); ?></li>
             </ul>
         </div>
 
