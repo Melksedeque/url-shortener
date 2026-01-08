@@ -68,6 +68,7 @@ class Shortcode_Generator {
         if (false === $existing) {
             $table_name = $wpdb->prefix . 'url_shortener';
             // Query direta no prepare para conformidade
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $existing = $wpdb->get_row($wpdb->prepare(
                 "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
                 $short_code
@@ -81,6 +82,7 @@ class Shortcode_Generator {
         // Se não existe, insere na tabela
         if (!$existing) {
             $table_name = $wpdb->prefix . 'url_shortener';
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $wpdb->insert(
                 $table_name,
                 [
@@ -109,9 +111,11 @@ class Shortcode_Generator {
 
         if (false === $existing) {
             $table_name = $wpdb->prefix . 'url_shortener';
-            // Query separada para evitar avisos de interpolação
-            $query = "SELECT * FROM {$table_name} WHERE short_code = %s";
-            $existing = $wpdb->get_row($wpdb->prepare($query, $short_code));
+            // Query direta no prepare para conformidade
+            $existing = $wpdb->get_row($wpdb->prepare(
+                "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
+                $short_code
+            ));
 
             if ($existing) {
                 wp_cache_set($cache_key, $existing, 'url_shortener', HOUR_IN_SECONDS);
@@ -121,6 +125,7 @@ class Shortcode_Generator {
         // Se não existe, insere na tabela
         if (!$existing) {
             $table_name = $wpdb->prefix . 'url_shortener';
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $wpdb->insert(
                 $table_name,
                 [

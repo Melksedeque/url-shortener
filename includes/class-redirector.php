@@ -46,9 +46,9 @@ class Redirector {
 
         if (false === $result) {
             global $wpdb;
-            $table_name = $wpdb->prefix . 'url_shortener';
             
             // Busca o código curto na tabela
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $result = $wpdb->get_row($wpdb->prepare(
                 "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
                 $short_code

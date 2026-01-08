@@ -64,3 +64,6 @@ Desktop.ini
 *.bak
 *.backup
 *~
+
+# Relatório de erros do plugin check do WordPress
+url-shortener-by-melk-*.json
