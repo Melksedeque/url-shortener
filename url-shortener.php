@@ -24,7 +24,7 @@ define('URL_SHORTENER_PLUGIN_FILE', __FILE__);
 
 // Autoloader para carregar classes automaticamente
 spl_autoload_register(function ($class) {
-    $prefix = 'URL_Shortener\\';
+    $prefix = 'WP_URL_Shortener\\';
     $base_dir = URL_SHORTENER_PLUGIN_DIR . 'includes/';
 
     $len = strlen($prefix);
@@ -48,14 +48,14 @@ require_once URL_SHORTENER_PLUGIN_DIR . 'includes/class-redirector.php';
 require_once URL_SHORTENER_PLUGIN_DIR . 'includes/class-admin-columns.php';
 
 // Hook de ativação
-register_activation_hook(__FILE__, ['URL_Shortener\URL_Shortener', 'activate']);
+register_activation_hook(__FILE__, ['WP_URL_Shortener\URL_Shortener', 'activate']);
 
 // Hook de desativação
-register_deactivation_hook(__FILE__, ['URL_Shortener\URL_Shortener', 'deactivate']);
+register_deactivation_hook(__FILE__, ['WP_URL_Shortener\URL_Shortener', 'deactivate']);
 
 // Inicializa o plugin
 function url_shortener_init() {
-    $plugin = URL_Shortener\URL_Shortener::get_instance();
+    $plugin = WP_URL_Shortener\URL_Shortener::get_instance();
     $plugin->run();
 }
 add_action('plugins_loaded', 'url_shortener_init');
