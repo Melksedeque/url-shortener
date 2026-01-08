@@ -105,20 +105,24 @@ class Shortcode_Generator {
         
         $short_code = $this->generate_hash($term_id, 'term');
         
-        // Verifica se já existe na tabela usando cache
-        $cache_key = 'wpus_check_' . $short_code;
-        $existing = wp_cache_get($cache_key, 'url_shortener');
+        // 1. Defina uma chave única para o cache baseada no short_code
+        $cache_key = 'short_url_' . md5($short_code);
+        $group     = 'url_shortener_queries';
+
+        // 2. Tenta recuperar o resultado do cache primeiro
+        $existing = wp_cache_get($cache_key, $group);
 
         if (false === $existing) {
-            $table_name = $wpdb->prefix . 'url_shortener';
-            // Query direta no prepare para conformidade
+            // 3. Se não estiver no cache, faz a consulta ao banco
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $existing = $wpdb->get_row($wpdb->prepare(
                 "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
                 $short_code
             ));
 
+            // 4. Salva o resultado no cache por 1 hora (3600 segundos) para evitar consultas repetitivas
             if ($existing) {
-                wp_cache_set($cache_key, $existing, 'url_shortener', HOUR_IN_SECONDS);
+                wp_cache_set($cache_key, $existing, $group, HOUR_IN_SECONDS);
             }
         }
         
