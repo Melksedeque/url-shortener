@@ -5,7 +5,7 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
-## [1.0.0] - 2026-01-05
+## [1.0.0] - 2026-01-08
 
 ### 🎉 Lançamento Inicial
 
@@ -60,10 +60,6 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 #### Documentação
 - README.md completo com instruções de uso
-- INSTALLATION.md com guia passo a passo
-- EXAMPLES.md com exemplos práticos de código
-- Comentários inline no código
-- Roadmap de funcionalidades futuras
 
 ---
 
@@ -120,8 +116,6 @@ Este projeto usa [Semantic Versioning](https://semver.org/):
 
 ## Links
 
-- [Repositório no GitHub](https://github.com/seu-usuario/wp-url-shortener)
-- [Documentação](README.md)
-- [Guia de Instalação](INSTALLATION.md)
-- [Exemplos de Uso](EXAMPLES.md)
-- [Reportar Bug](https://github.com/seu-usuario/url-shortener/issues)
+- [Repositório no GitHub](https://github.com/Melksedeque/plugin-url-shortener-wordpress)
+- [Documentação e Instalação](README.md)
+- [Reportar Bug](https://github.com/Melksedeque/plugin-url-shortener-wordpress/issues)
