@@ -40,10 +40,6 @@ class URL_Shortener {
         $this->admin_columns->init();
     }
 
-    public function load_textdomain() {
-        load_plugin_textdomain('url-shortener-by-melk', false, dirname(plugin_basename(URL_SHORTENER_PLUGIN_FILE)) . '/languages');
-    }
-
     public function generate_on_publish($new_status, $old_status, $post) {
         if ($new_status !== 'publish' || $old_status === 'publish') {
             return;
