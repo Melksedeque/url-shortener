@@ -99,13 +99,17 @@ class URL_Shortener {
         // Define opções padrão
         add_option('wpus_enabled_post_types', ['post', 'page']);
         add_option('wpus_enabled_taxonomies', ['category', 'post_tag']);
-        
-        // Força atualização das rewrite rules
+
+        // Instancia o redirecionador e adiciona regras de rewrite
+        $redirector = new Redirector();
+        $redirector->add_rewrite_rules();
+
+        // Flush nas regras de rewrite para garantir que funcionem
         flush_rewrite_rules();
     }
 
     public static function deactivate() {
-        // Limpa as rewrite rules
+        // Limpa as regras de rewrite ao desativar
         flush_rewrite_rules();
     }
 }
