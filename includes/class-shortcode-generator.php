@@ -114,7 +114,6 @@ class Shortcode_Generator {
 
         if (false === $existing) {
             // 3. Se não estiver no cache, faz a consulta ao banco
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $existing = $wpdb->get_row($wpdb->prepare(
                 "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
                 $short_code
