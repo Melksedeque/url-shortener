@@ -5,8 +5,11 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![WordPress](https://img.shields.io/badge/WordPress-Tested-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://www.php.net/)
+[![Status](https://img.shields.io/badge/Status-Under%20Review-yellow.svg)](https://wordpress.org/plugins/)
 
-O **URL Shortener by Melk** é um plugin leve e eficiente para WordPress que permite gerar URLs curtas automaticamente para seus posts, páginas, categorias, tags e Custom Post Types. Ideal para compartilhamento em redes sociais e materiais de marketing.
+O **URL Shortener by Melk** é um plugin leve, eficiente e seguro para WordPress que permite gerar URLs curtas automaticamente para seus posts, páginas, categorias, tags e Custom Post Types. Ideal para compartilhamento em redes sociais e materiais de marketing.
+
+🚀 **Submetido e em análise pela equipe de Plugins do WordPress.org.**
 
 ---
 
@@ -16,8 +19,19 @@ O **URL Shortener by Melk** é um plugin leve e eficiente para WordPress que per
 - 🎯 **Suporte Abrangente:** Funciona com Posts, Páginas, Categorias, Tags e Custom Post Types.
 - 📋 **Cópia Rápida:** Botão de "Copiar" direto na listagem de posts/termos no painel admin.
 - ⚡ **Geração em Massa:** Ferramenta para gerar URLs curtas para conteúdo antigo com um clique.
-- 🚀 **Performance:** Redirecionamento rápido usando regras de rewrite nativas do WordPress (sem queries pesadas).
-- 🔒 **Seguro:** Código validado e seguro, seguindo as melhores práticas do WordPress.
+- 🚀 **Performance:** Redirecionamento rápido usando regras de rewrite nativas do WordPress.
+- 🔒 **Seguro:** Código validado, sanitizado e escapado seguindo rigorosamente os padrões do WordPress.
+
+---
+
+## 🛡️ Qualidade e Segurança (Compliance)
+
+Este plugin foi desenvolvido seguindo as melhores práticas de desenvolvimento WordPress e aprovado em testes rigorosos de qualidade (Plugin Check):
+
+- **Segurança de Banco de Dados:** Todas as consultas utilizam `wpdb->prepare()` para prevenir SQL Injection.
+- **Sanitização e Escape:** Todos os dados de entrada são sanitizados e todas as saídas são escapadas (`esc_html`, `esc_attr`, etc.) para prevenir XSS.
+- **Performance Otimizada:** Implementação de **Object Caching** (`wp_cache_get`/`wp_cache_set`) para reduzir consultas ao banco de dados em ambientes de alta tráfego.
+- **Padrões de Código:** Compatível com os padrões de codificação do WordPress (WPCS).
 
 ---
 
@@ -38,7 +52,7 @@ O **URL Shortener by Melk** é um plugin leve e eficiente para WordPress que per
    ```
 2. Clone o repositório:
    ```bash
-   git clone https://github.com/Melksedeque/plugin-url-shortener-wordpress.git url-shortener
+   git clone https://github.com/Melksedeque/url-shortener.git
    ```
 3. Ative o plugin no painel do WordPress.
 
