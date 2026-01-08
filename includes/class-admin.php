@@ -25,8 +25,16 @@ class Admin {
     }
 
     public function register_settings() {
-        register_setting('wpus_settings', 'wpus_enabled_post_types');
-        register_setting('wpus_settings', 'wpus_enabled_taxonomies');
+        register_setting('wpus_settings', 'wpus_enabled_post_types', [
+            'sanitize_callback' => [$this, 'sanitize_array']
+        ]);
+        register_setting('wpus_settings', 'wpus_enabled_taxonomies', [
+            'sanitize_callback' => [$this, 'sanitize_array']
+        ]);
+    }
+
+    public function sanitize_array($input) {
+        return (is_array($input)) ? array_map('sanitize_text_field', $input) : sanitize_text_field($input);
     }
 
     public function enqueue_admin_assets($hook) {
@@ -113,6 +121,7 @@ class Admin {
 
         wp_send_json_success([
             'message' => sprintf(
+                /* translators: %d: Number of generated URLs */
                 __('%d URLs curtas foram geradas com sucesso!', 'url-shortener-by-melk'),
                 $generated
             ),
