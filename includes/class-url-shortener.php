@@ -41,7 +41,7 @@ class URL_Shortener {
     }
 
     public function load_textdomain() {
-        load_plugin_textdomain('wp-url-shortener', false, dirname(plugin_basename(URL_SHORTENER_PLUGIN_FILE)) . '/languages');
+        load_plugin_textdomain('url-shortener-by-melk', false, dirname(plugin_basename(URL_SHORTENER_PLUGIN_FILE)) . '/languages');
     }
 
     public function generate_on_publish($new_status, $old_status, $post) {

@@ -16,10 +16,10 @@ class Admin {
 
     public function add_admin_menu() {
         add_options_page(
-            __('URL Shortener', 'wp-url-shortener'),
-            __('URL Shortener', 'wp-url-shortener'),
+            __('URL Shortener', 'url-shortener-by-melk'),
+            __('URL Shortener', 'url-shortener-by-melk'),
             'manage_options',
-            'wp-url-shortener',
+            'url-shortener-by-melk',
             [$this, 'render_settings_page']
         );
     }
@@ -53,9 +53,9 @@ class Admin {
             'ajaxurl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('wpus_generate_bulk'),
             'strings' => [
-                'generating' => __('Gerando URLs curtas...', 'wp-url-shortener'),
-                'success' => __('URLs curtas geradas com sucesso!', 'wp-url-shortener'),
-                'error' => __('Erro ao gerar URLs curtas.', 'wp-url-shortener'),
+                'generating' => __('Gerando URLs curtas...', 'url-shortener-by-melk'),
+                'success' => __('URLs curtas geradas com sucesso!', 'url-shortener-by-melk'),
+                'error' => __('Erro ao gerar URLs curtas.', 'url-shortener-by-melk'),
             ]
         ]);
     }
@@ -73,7 +73,7 @@ class Admin {
             update_option('wpus_enabled_post_types', $post_types);
             update_option('wpus_enabled_taxonomies', $taxonomies);
             
-            echo '<div class="notice notice-success is-dismissible"><p>' . __('Configurações salvas com sucesso!', 'wp-url-shortener') . '</p></div>';
+            echo '<div class="notice notice-success is-dismissible"><p>' . __('Configurações salvas com sucesso!', 'url-shortener-by-melk') . '</p></div>';
         }
 
         $enabled_post_types = get_option('wpus_enabled_post_types', ['post', 'page']);
@@ -92,7 +92,7 @@ class Admin {
         check_ajax_referer('wpus_generate_bulk', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('Permissão negada.', 'wp-url-shortener')]);
+            wp_send_json_error(['message' => __('Permissão negada.', 'url-shortener-by-melk')]);
         }
 
         $type = isset($_POST['type']) ? sanitize_text_field($_POST['type']) : '';

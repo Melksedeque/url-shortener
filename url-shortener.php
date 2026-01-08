@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: URL Shortener
+ * Plugin Name: URL Shortener by Melk
  * Plugin URI: https://github.com/Melksedeque/plugin-url-shortener-wordpress
  * Description: Crie URLs curtas para posts, páginas, categorias, tags e custom post types do seu WordPress.
  * Version: 1.0.0
@@ -8,7 +8,8 @@
  * Author URI: https://github.com/Melksedeque
  * License: GPL v3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain: url-shortener
+ * Text Domain: url-shortener-by-melk
+ * Update URI: false
  */
 
 // Evita acesso direto

@@ -34,7 +34,7 @@ class Admin_Columns {
             
             // Adiciona a coluna após a coluna 'date'
             if ($key === 'date') {
-                $new_columns['wpus_short_url'] = __('URL Curta', 'wp-url-shortener');
+                $new_columns['wpus_short_url'] = __('URL Curta', 'url-shortener-by-melk');
             }
         }
         
@@ -49,7 +49,7 @@ class Admin_Columns {
         $short_code = get_post_meta($post_id, '_wpus_short_code', true);
         
         if (empty($short_code)) {
-            echo '<span style="color: #999;">' . __('Não gerada', 'wp-url-shortener') . '</span>';
+            echo '<span style="color: #999;">' . __('Não gerada', 'url-shortener-by-melk') . '</span>';
             return;
         }
 
@@ -67,7 +67,7 @@ class Admin_Columns {
             
             // Adiciona a coluna após a coluna 'slug'
             if ($key === 'slug') {
-                $new_columns['wpus_short_url'] = __('URL Curta', 'wp-url-shortener');
+                $new_columns['wpus_short_url'] = __('URL Curta', 'url-shortener-by-melk');
             }
         }
         
@@ -82,7 +82,7 @@ class Admin_Columns {
         $short_code = get_term_meta($term_id, '_wpus_short_code', true);
         
         if (empty($short_code)) {
-            return '<span style="color: #999;">' . __('Não gerada', 'wp-url-shortener') . '</span>';
+            return '<span style="color: #999;">' . __('Não gerada', 'url-shortener-by-melk') . '</span>';
         }
 
         $generator = new Shortcode_Generator();
@@ -101,7 +101,7 @@ class Admin_Columns {
                 type="button" 
                 class="button button-small wpus-copy-btn" 
                 data-url="<?php echo esc_attr($short_url); ?>"
-                title="<?php esc_attr_e('Copiar URL', 'wp-url-shortener'); ?>"
+                title="<?php esc_attr_e('Copiar URL', 'url-shortener-by-melk'); ?>"
             >
                 <span class="dashicons dashicons-admin-page"></span>
             </button>
