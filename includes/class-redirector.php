@@ -40,14 +40,24 @@ class Redirector {
             return;
         }
 
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'url_shortener';
-        
-        // Busca o código curto na tabela
-        $result = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM $table_name WHERE short_code = %s",
-            $short_code
-        ));
+        // Tenta buscar do cache primeiro
+        $cache_key = 'wpus_short_' . $short_code;
+        $result = wp_cache_get($cache_key, 'url_shortener');
+
+        if (false === $result) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'url_shortener';
+            
+            // Busca o código curto na tabela
+            $result = $wpdb->get_row($wpdb->prepare(
+                "SELECT * FROM $table_name WHERE short_code = %s",
+                $short_code
+            ));
+
+            if ($result) {
+                wp_cache_set($cache_key, $result, 'url_shortener', HOUR_IN_SECONDS);
+            }
+        }
         
         if (!$result) {
             // Se não encontrou, retorna 404
@@ -61,18 +71,19 @@ class Redirector {
         $destination_url = '';
         
         if ($result->object_type === 'post') {
-            $destination_url = get_permalink($result->object_id);
+            $destination_url = get_permalink((int) $result->object_id);
         } elseif ($result->object_type === 'term') {
-            $destination_url = get_term_link($result->object_id);
+            $destination_url = get_term_link((int) $result->object_id);
         }
         
         // Se encontrou uma URL válida, redireciona
         if (!empty($destination_url) && !is_wp_error($destination_url)) {
-            // Aqui futuramente podemos adicionar tracking de cliques
+            // Aqui virá a lógica de tracking de cliques nas versões futuras
             $this->track_click($result->id, $short_code);
             
             // Redireciona com código 301 (permanente)
-            wp_redirect($destination_url, 301);
+            // wp_safe_redirect é preferível para segurança
+            wp_safe_redirect($destination_url, 301);
             exit;
         } else {
             // Se a URL de destino não é válida, retorna 404
@@ -95,7 +106,7 @@ class Redirector {
         // - IP do visitante
         // - User agent
         // - Referrer
-        // - Data/hora
+        // - Data/hora do acesso
         // - Geolocalização
         
         // Por enquanto, só registramos que houve acesso
