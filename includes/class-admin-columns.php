@@ -106,7 +106,7 @@ class Admin_Columns {
                 <span class="dashicons dashicons-admin-page"></span>
             </button>
             <span class="wpus-copied-message" style="display: none;">
-                <?php _e('Copiado!', 'wp-url-shortener'); ?>
+                <?php _e('Copiado!', 'url-shortener-by-melk'); ?>
             </span>
         </div>
         <?php
@@ -120,22 +120,22 @@ class Admin_Columns {
 
         wp_enqueue_style(
             'wpus-columns-css',
-            WP_URL_SHORTENER_PLUGIN_URL . 'assets/css/columns.css',
+            URL_SHORTENER_PLUGIN_URL . 'assets/css/columns.css',
             [],
-            WP_URL_SHORTENER_VERSION
+            URL_SHORTENER_VERSION
         );
 
         wp_enqueue_script(
             'wpus-columns-js',
-            WP_URL_SHORTENER_PLUGIN_URL . 'assets/js/columns.js',
+            URL_SHORTENER_PLUGIN_URL . 'assets/js/columns.js',
             ['jquery'],
-            WP_URL_SHORTENER_VERSION,
+            URL_SHORTENER_VERSION,
             true
         );
 
         wp_localize_script('wpus-columns-js', 'wpusColumns', [
-            'copiedText' => __('Copiado!', 'wp-url-shortener'),
-            'copyText' => __('Copiar URL', 'wp-url-shortener'),
+            'copiedText' => __('Copiado!', 'url-shortener-by-melk'),
+            'copyText' => __('Copiar URL', 'url-shortener-by-melk'),
         ]);
     }
 }

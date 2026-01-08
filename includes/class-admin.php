@@ -36,16 +36,16 @@ class Admin {
 
         wp_enqueue_style(
             'wpus-admin-css',
-            WP_URL_SHORTENER_PLUGIN_URL . 'assets/css/admin.css',
+            URL_SHORTENER_PLUGIN_URL . 'assets/css/admin.css',
             [],
-            WP_URL_SHORTENER_VERSION
+            URL_SHORTENER_VERSION
         );
 
         wp_enqueue_script(
             'wpus-admin-js',
-            WP_URL_SHORTENER_PLUGIN_URL . 'assets/js/admin.js',
+            URL_SHORTENER_PLUGIN_URL . 'assets/js/admin.js',
             ['jquery'],
-            WP_URL_SHORTENER_VERSION,
+            URL_SHORTENER_VERSION,
             true
         );
 
@@ -85,7 +85,7 @@ class Admin {
         // Obtém todas as taxonomias públicas
         $taxonomies = get_taxonomies(['public' => true], 'objects');
         
-        include WP_URL_SHORTENER_PLUGIN_DIR . 'admin/settings-page.php';
+        include URL_SHORTENER_PLUGIN_DIR . 'admin/settings-page.php';
     }
 
     public function ajax_generate_bulk() {
