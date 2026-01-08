@@ -61,15 +61,26 @@ class Shortcode_Generator {
         
         $short_code = $this->generate_hash($post_id, 'post');
         
-        // Verifica se já existe na tabela
-        $table_name = $wpdb->prefix . 'url_shortener';
-        $existing = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM $table_name WHERE short_code = %s",
-            $short_code
-        ));
+        // Verifica se já existe na tabela usando cache primeiro
+        $cache_key = 'wpus_check_' . $short_code;
+        $existing = wp_cache_get($cache_key, 'url_shortener');
+
+        if (false === $existing) {
+            $table_name = $wpdb->prefix . 'url_shortener';
+            // Nota: Nomes de tabela não podem ser preparados com %s, mas vindo de $wpdb->prefix é seguro.
+            $existing = $wpdb->get_row($wpdb->prepare(
+                "SELECT * FROM $table_name WHERE short_code = %s",
+                $short_code
+            ));
+
+            if ($existing) {
+                wp_cache_set($cache_key, $existing, 'url_shortener', HOUR_IN_SECONDS);
+            }
+        }
         
         // Se não existe, insere na tabela
         if (!$existing) {
+            $table_name = $wpdb->prefix . 'url_shortener';
             $wpdb->insert(
                 $table_name,
                 [
@@ -92,15 +103,26 @@ class Shortcode_Generator {
         
         $short_code = $this->generate_hash($term_id, 'term');
         
-        // Verifica se já existe na tabela
-        $table_name = $wpdb->prefix . 'url_shortener';
-        $existing = $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM $table_name WHERE short_code = %s",
-            $short_code
-        ));
+        // Verifica se já existe na tabela usando cache
+        $cache_key = 'wpus_check_' . $short_code;
+        $existing = wp_cache_get($cache_key, 'url_shortener');
+
+        if (false === $existing) {
+            $table_name = $wpdb->prefix . 'url_shortener';
+            // Nota: Nomes de tabela não podem ser preparados com %s, mas vindo de $wpdb->prefix é seguro.
+            $existing = $wpdb->get_row($wpdb->prepare(
+                "SELECT * FROM $table_name WHERE short_code = %s",
+                $short_code
+            ));
+
+            if ($existing) {
+                wp_cache_set($cache_key, $existing, 'url_shortener', HOUR_IN_SECONDS);
+            }
+        }
         
         // Se não existe, insere na tabela
         if (!$existing) {
+            $table_name = $wpdb->prefix . 'url_shortener';
             $wpdb->insert(
                 $table_name,
                 [
