@@ -60,3 +60,15 @@ function url_shortener_init() {
     $plugin->run();
 }
 add_action('plugins_loaded', 'url_shortener_init');
+
+// Adiciona link de documentação na listagem de plugins
+function url_shortener_add_action_links($links) {
+    $plugin_data = get_plugin_data(__FILE__);
+    $plugin_uri = $plugin_data['PluginURI'];
+    
+    $docs_link = '<a href="' . esc_url($plugin_uri) . '#readme" target="_blank" aria-label="' . esc_attr__('Ver documentação do plugin', 'url-shortener-by-melk') . '">' . __('Documentação', 'url-shortener-by-melk') . '</a>';
+    
+    array_push($links, $docs_link);
+    return $links;
+}
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'url_shortener_add_action_links');
