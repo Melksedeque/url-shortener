@@ -30,7 +30,7 @@ class Admin {
     }
 
     public function enqueue_admin_assets($hook) {
-        if ($hook !== 'settings_page_wp-url-shortener') {
+        if ($hook !== 'settings_page_url-shortener-by-melk') {
             return;
         }
 
@@ -99,7 +99,7 @@ class Admin {
         $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
 
         if (empty($type) || empty($name)) {
-            wp_send_json_error(['message' => __('Parâmetros inválidos.', 'wp-url-shortener')]);
+            wp_send_json_error(['message' => __('Parâmetros inválidos.', 'url-shortener-by-melk')]);
         }
 
         $generator = new Shortcode_Generator();
@@ -113,7 +113,7 @@ class Admin {
 
         wp_send_json_success([
             'message' => sprintf(
-                __('%d URLs curtas foram geradas com sucesso!', 'wp-url-shortener'),
+                __('%d URLs curtas foram geradas com sucesso!', 'url-shortener-by-melk'),
                 $generated
             ),
             'count' => $generated
