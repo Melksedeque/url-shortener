@@ -1,42 +1,43 @@
 === URL Shortener by Melk ===
 Contributors: Melksedeque
-Tags: url shortener, shortlink, redirection, permalink, custom post type, seo
+Tags: url shortener, shortlink, redirection, permalink, seo
 Requires at least: 5.0
+Tested up to: 6.7
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Crie URLs curtas para posts, páginas, categorias, tags e custom post types do seu WordPress automaticamente.
+Create short URLs for your WordPress posts, pages, categories, tags, and custom post types automatically.
 
 == Description ==
 
-O **URL Shortener by Melk** é um plugin leve e eficiente para WordPress que permite gerar URLs curtas automaticamente para seus posts, páginas, categorias, tags e Custom Post Types. Ideal para compartilhamento em redes sociais e materiais de marketing.
+**URL Shortener by Melk** is a lightweight and efficient WordPress plugin that allows you to automatically generate short URLs for your posts, pages, categories, tags, and Custom Post Types. Ideal for sharing on social media and marketing materials.
 
-**Funcionalidades:**
+**Features:**
 
-*   **Geração Automática:** Cria URLs curtas automaticamente ao publicar novos posts.
-*   **Suporte Abrangente:** Funciona com Posts, Páginas, Categorias, Tags e Custom Post Types.
-*   **Cópia Rápida:** Botão de "Copiar" direto na listagem de posts/termos no painel admin.
-*   **Geração em Massa:** Ferramenta para gerar URLs curtas para conteúdo antigo com um clique.
-*   **Performance:** Redirecionamento rápido usando regras de rewrite nativas do WordPress (sem queries pesadas).
-*   **Seguro:** Código validado e seguro, seguindo as melhores práticas do WordPress.
+*   **Automatic Generation:** Automatically creates short URLs when publishing new posts.
+*   **Comprehensive Support:** Works with Posts, Pages, Categories, Tags, and Custom Post Types.
+*   **Quick Copy:** "Copy" button directly in the post/term listing in the admin panel.
+*   **Bulk Generation:** Tool to generate short URLs for old content with one click.
+*   **Performance:** Fast redirection using native WordPress rewrite rules (no heavy queries).
+*   **Secure:** Validated and secure code, following WordPress best practices.
 
 == Installation ==
 
-1. Faça o upload da pasta `url-shortener` para o diretório `/wp-content/plugins/`.
-2. Ative o plugin através do menu 'Plugins' no WordPress.
-3. Vá em **Configurações > URL Shortener** para ajustar as preferências.
+1. Upload the `url-shortener` folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Go to **Settings > URL Shortener** to adjust preferences.
 
 == Frequently Asked Questions ==
 
-= O plugin funciona com Custom Post Types? =
-Sim! Você pode habilitar quais tipos de post deseja gerar URLs curtas nas configurações do plugin.
+= Does the plugin work with Custom Post Types? =
+Yes! You can enable which post types you want to generate short URLs for in the plugin settings.
 
-= Como as URLs são geradas? =
-Utilizamos um algoritmo Base62 seguro para criar strings curtas e únicas (ex: `abc12`) baseadas no ID do post.
+= How are URLs generated? =
+We use a secure Base62 algorithm to create short and unique strings (e.g., `abc12`) based on the post ID.
 
 == Changelog ==
 
 = 1.0.0 =
-* Lançamento inicial.
+* Initial release.
