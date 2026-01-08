@@ -75,13 +75,13 @@ class Admin {
 
         // Salva configurações se o formulário foi enviado
         if (isset($_POST['wpus_save_settings']) && check_admin_referer('wpus_settings_nonce')) {
-            $post_types = isset($_POST['wpus_enabled_post_types']) ? array_map('sanitize_text_field', $_POST['wpus_enabled_post_types']) : [];
-            $taxonomies = isset($_POST['wpus_enabled_taxonomies']) ? array_map('sanitize_text_field', $_POST['wpus_enabled_taxonomies']) : [];
+            $post_types = isset($_POST['wpus_enabled_post_types']) ? array_map('sanitize_text_field', wp_unslash($_POST['wpus_enabled_post_types'])) : [];
+            $taxonomies = isset($_POST['wpus_enabled_taxonomies']) ? array_map('sanitize_text_field', wp_unslash($_POST['wpus_enabled_taxonomies'])) : [];
             
             update_option('wpus_enabled_post_types', $post_types);
             update_option('wpus_enabled_taxonomies', $taxonomies);
             
-            echo '<div class="notice notice-success is-dismissible"><p>' . __('Configurações salvas com sucesso!', 'url-shortener-by-melk') . '</p></div>';
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Configurações salvas com sucesso!', 'url-shortener-by-melk') . '</p></div>';
         }
 
         $enabled_post_types = get_option('wpus_enabled_post_types', ['post', 'page']);
@@ -103,8 +103,8 @@ class Admin {
             wp_send_json_error(['message' => __('Permissão negada.', 'url-shortener-by-melk')]);
         }
 
-        $type = isset($_POST['type']) ? sanitize_text_field($_POST['type']) : '';
-        $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+        $type = isset($_POST['type']) ? sanitize_text_field(wp_unslash($_POST['type'])) : '';
+        $name = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
 
         if (empty($type) || empty($name)) {
             wp_send_json_error(['message' => __('Parâmetros inválidos.', 'url-shortener-by-melk')]);
