@@ -27,7 +27,6 @@ class URL_Shortener {
     }
 
     public function run() {
-        add_action('init', [$this, 'load_textdomain']);
         add_action('init', [$this->redirector, 'add_rewrite_rules']);
         add_action('template_redirect', [$this->redirector, 'handle_redirect']);
         
