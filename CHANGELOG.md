@@ -116,6 +116,6 @@ Este projeto usa [Semantic Versioning](https://semver.org/):
 
 ## Links
 
-- [Repositório no GitHub](https://github.com/Melksedeque/plugin-url-shortener-wordpress)
+- [Repositório no GitHub](https://github.com/Melksedeque/url-shortener)
 - [Documentação e Instalação](README.md)
-- [Reportar Bug](https://github.com/Melksedeque/plugin-url-shortener-wordpress/issues)
+- [Reportar Bug](https://github.com/Melksedeque/url-shortener/issues)
