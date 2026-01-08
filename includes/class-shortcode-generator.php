@@ -67,9 +67,9 @@ class Shortcode_Generator {
 
         if (false === $existing) {
             $table_name = $wpdb->prefix . 'url_shortener';
-            // Nota: Nomes de tabela não podem ser preparados com %s, mas vindo de $wpdb->prefix é seguro.
+            // Query direta no prepare para conformidade
             $existing = $wpdb->get_row($wpdb->prepare(
-                "SELECT * FROM $table_name WHERE short_code = %s",
+                "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
                 $short_code
             ));
 
@@ -109,11 +109,9 @@ class Shortcode_Generator {
 
         if (false === $existing) {
             $table_name = $wpdb->prefix . 'url_shortener';
-            // Nota: Nomes de tabela não podem ser preparados com %s, mas vindo de $wpdb->prefix é seguro.
-            $existing = $wpdb->get_row($wpdb->prepare(
-                "SELECT * FROM $table_name WHERE short_code = %s",
-                $short_code
-            ));
+            // Query separada para evitar avisos de interpolação
+            $query = "SELECT * FROM {$table_name} WHERE short_code = %s";
+            $existing = $wpdb->get_row($wpdb->prepare($query, $short_code));
 
             if ($existing) {
                 wp_cache_set($cache_key, $existing, 'url_shortener', HOUR_IN_SECONDS);

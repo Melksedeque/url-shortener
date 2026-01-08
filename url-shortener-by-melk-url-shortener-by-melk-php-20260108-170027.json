@@ -1,0 +1,132 @@
+{
+    "generated_at": "2026-01-08 17:00:27",
+    "plugin": "URL Shortener by Melk",
+    "results": {
+        "admin/settings-page.php": [
+            {
+                "message": "All output should be run through an escaping function (like esc_html_e() or esc_attr_e()), found '_e'.",
+                "code": "WordPress.Security.EscapeOutput.UnsafePrintingFunction",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fadmin%2Fsettings-page.php&line=45",
+                "docs": "https://developer.wordpress.org/apis/security/escaping/#escaping-with-localization",
+                "severity": 5,
+                "type": "ERROR",
+                "line": 45,
+                "column": 39
+            }
+        ],
+        "includes/class-shortcode-generator.php": [
+            {
+                "message": "Use of a direct database call is discouraged.",
+                "code": "WordPress.DB.DirectDatabaseQuery.DirectQuery",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-shortcode-generator.php&line=72",
+                "docs": "",
+                "severity": 5,
+                "type": "WARNING",
+                "line": 72,
+                "column": 25
+            },
+            {
+                "message": "Unescaped parameter $query used in $wpdb->get_row($wpdb->prepare($query, $short_code))\\n$query assigned unsafely at line 71:\\n $query = \"SELECT * FROM {$table_name} WHERE short_code = %s\"\\n$table_name assigned unsafely at line 69:\\n $table_name = $wpdb->prefix . 'url_shortener'",
+                "code": "PluginCheck.Security.DirectDB.UnescapedDBParameter",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-shortcode-generator.php&line=72",
+                "docs": "",
+                "severity": 5,
+                "type": "ERROR",
+                "line": 72,
+                "column": 32
+            },
+            {
+                "message": "Use placeholders and $wpdb->prepare(); found $query",
+                "code": "WordPress.DB.PreparedSQL.NotPrepared",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-shortcode-generator.php&line=72",
+                "docs": "",
+                "severity": 5,
+                "type": "ERROR",
+                "line": 72,
+                "column": 55
+            },
+            {
+                "message": "Use of a direct database call is discouraged.",
+                "code": "WordPress.DB.DirectDatabaseQuery.DirectQuery",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-shortcode-generator.php&line=82",
+                "docs": "",
+                "severity": 5,
+                "type": "WARNING",
+                "line": 82,
+                "column": 13
+            },
+            {
+                "message": "Use of a direct database call is discouraged.",
+                "code": "WordPress.DB.DirectDatabaseQuery.DirectQuery",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-shortcode-generator.php&line=112",
+                "docs": "",
+                "severity": 5,
+                "type": "WARNING",
+                "line": 112,
+                "column": 25
+            },
+            {
+                "message": "Unescaped parameter $query used in $wpdb->get_row($wpdb->prepare($query, $short_code))\\n$query assigned unsafely at line 111:\\n $query = \"SELECT * FROM {$table_name} WHERE short_code = %s\"\\n$table_name assigned unsafely at line 109:\\n $table_name = $wpdb->prefix . 'url_shortener'",
+                "code": "PluginCheck.Security.DirectDB.UnescapedDBParameter",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-shortcode-generator.php&line=112",
+                "docs": "",
+                "severity": 5,
+                "type": "ERROR",
+                "line": 112,
+                "column": 32
+            },
+            {
+                "message": "Use placeholders and $wpdb->prepare(); found $query",
+                "code": "WordPress.DB.PreparedSQL.NotPrepared",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-shortcode-generator.php&line=112",
+                "docs": "",
+                "severity": 5,
+                "type": "ERROR",
+                "line": 112,
+                "column": 55
+            },
+            {
+                "message": "Use of a direct database call is discouraged.",
+                "code": "WordPress.DB.DirectDatabaseQuery.DirectQuery",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-shortcode-generator.php&line=122",
+                "docs": "",
+                "severity": 5,
+                "type": "WARNING",
+                "line": 122,
+                "column": 13
+            }
+        ],
+        "includes/class-redirector.php": [
+            {
+                "message": "Use of a direct database call is discouraged.",
+                "code": "WordPress.DB.DirectDatabaseQuery.DirectQuery",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-redirector.php&line=53",
+                "docs": "",
+                "severity": 5,
+                "type": "WARNING",
+                "line": 53,
+                "column": 23
+            },
+            {
+                "message": "Unescaped parameter $query used in $wpdb->get_row($wpdb->prepare($query, $short_code))\\n$query assigned unsafely at line 52:\\n $query = \"SELECT * FROM {$table_name} WHERE short_code = %s\"\\n$table_name assigned unsafely at line 49:\\n $table_name = $wpdb->prefix . 'url_shortener'",
+                "code": "PluginCheck.Security.DirectDB.UnescapedDBParameter",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-redirector.php&line=53",
+                "docs": "",
+                "severity": 5,
+                "type": "ERROR",
+                "line": 53,
+                "column": 30
+            },
+            {
+                "message": "Use placeholders and $wpdb->prepare(); found $query",
+                "code": "WordPress.DB.PreparedSQL.NotPrepared",
+                "link": "https://www.nerdwho.com.br/wp-admin/plugin-editor.php?plugin=url-shortener-by-melk%2Furl-shortener-by-melk.php&file=url-shortener-by-melk%2Fincludes%2Fclass-redirector.php&line=53",
+                "docs": "",
+                "severity": 5,
+                "type": "ERROR",
+                "line": 53,
+                "column": 53
+            }
+        ]
+    }
+}

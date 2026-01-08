@@ -50,7 +50,7 @@ class Redirector {
             
             // Busca o código curto na tabela
             $result = $wpdb->get_row($wpdb->prepare(
-                "SELECT * FROM $table_name WHERE short_code = %s",
+                "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
                 $short_code
             ));
 

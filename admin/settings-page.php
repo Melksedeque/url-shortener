@@ -42,14 +42,14 @@ if (!defined('ABSPATH')) {
                                 <?php endforeach; ?>
                             </fieldset>
                             <p class="description">
-                                <?php _e('URLs curtas serão criadas automaticamente quando novos posts desses tipos forem publicados.', 'url-shortener-by-melk'); ?>
+                                <?php esc_html_e('URLs curtas serão criadas automaticamente quando novos posts desses tipos forem publicados.', 'url-shortener-by-melk'); ?>
                             </p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <?php _e('Taxonomias', 'url-shortener-by-melk'); ?>
+                            <?php esc_html_e('Taxonomias', 'url-shortener-by-melk'); ?>
                         </th>
                         <td>
                             <fieldset>
@@ -69,7 +69,7 @@ if (!defined('ABSPATH')) {
                                 <?php endforeach; ?>
                             </fieldset>
                             <p class="description">
-                                <?php _e('URLs curtas serão criadas automaticamente quando novos termos dessas taxonomias forem criados.', 'url-shortener-by-melk'); ?>
+                                <?php esc_html_e('URLs curtas serão criadas automaticamente quando novos termos dessas taxonomias forem criados.', 'url-shortener-by-melk'); ?>
                             </p>
                         </td>
                     </tr>
