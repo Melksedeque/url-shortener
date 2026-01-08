@@ -99,39 +99,39 @@ if (!defined('ABSPATH')) {
                     <?php foreach ($post_types as $post_type) : ?>
                         <?php if ($post_type->name === 'attachment') continue; ?>
                         <?php
-                            $count = wp_count_posts($post_type->name);
-                            $total = isset($count->publish) ? $count->publish : 0;
+                            $wpus_count = wp_count_posts($post_type->name);
+                            $wpus_total = isset($wpus_count->publish) ? $wpus_count->publish : 0;
                         ?>
                         <button 
                             type="button" 
                             class="button wpus-generate-bulk" 
                             data-type="post_type" 
                             data-name="<?php echo esc_attr($post_type->name); ?>"
-                            <?php echo $total === 0 ? 'disabled' : ''; ?>
+                            <?php echo $wpus_total === 0 ? 'disabled' : ''; ?>
                         >
                             <?php echo esc_html($post_type->label); ?>
-                            <span class="count">(<?php echo esc_html($total); ?>)</span>
+                            <span class="count">(<?php echo esc_html($wpus_total); ?>)</span>
                         </button>
                     <?php endforeach; ?>
                 </div>
 
-                <h3><?php _e('Taxonomias', 'url-shortener-by-melk'); ?></h3>
+                <h3><?php esc_html_e('Taxonomias', 'url-shortener-by-melk'); ?></h3>
                 <div class="wpus-button-group">
                     <?php foreach ($taxonomies as $taxonomy) : ?>
                         <?php if (in_array($taxonomy->name, ['post_format', 'nav_menu'])) continue; ?>
                         <?php
-                            $terms = get_terms(['taxonomy' => $taxonomy->name, 'hide_empty' => false]);
-                            $total = is_array($terms) ? count($terms) : 0;
+                            $wpus_terms = get_terms(['taxonomy' => $taxonomy->name, 'hide_empty' => false]);
+                            $wpus_total = is_array($wpus_terms) ? count($wpus_terms) : 0;
                         ?>
                         <button 
                             type="button" 
                             class="button wpus-generate-bulk" 
                             data-type="taxonomy" 
                             data-name="<?php echo esc_attr($taxonomy->name); ?>"
-                            <?php echo $total === 0 ? 'disabled' : ''; ?>
+                            <?php echo $wpus_total === 0 ? 'disabled' : ''; ?>
                         >
                             <?php echo esc_html($taxonomy->label); ?>
-                            <span class="count">(<?php echo esc_html($total); ?>)</span>
+                            <span class="count">(<?php echo esc_html($wpus_total); ?>)</span>
                         </button>
                     <?php endforeach; ?>
                 </div>
