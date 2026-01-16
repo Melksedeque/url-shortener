@@ -1,5 +1,5 @@
 <?php
-namespace WP_URL_Shortener;
+namespace Melk\UrlShortenerByMelk;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -10,13 +10,13 @@ class Redirector {
     /**
      * Adiciona regras de rewrite para capturar URLs curtas
      */
-    public function add_rewrite_rules() {
+	public function add_rewrite_rules() {
         // Captura URLs com 5-7 caracteres alfanuméricos na raiz
-        add_rewrite_rule(
-            '^([0-9a-zA-Z]{5,7})/?$',
-            'index.php?wpus_short=$matches[1]',
-            'top'
-        );
+		add_rewrite_rule(
+			'^([0-9a-zA-Z]{5,7})/?$',
+			'index.php?urlshbym_short=$matches[1]',
+			'top'
+		);
         
         // Registra a query var
         add_filter('query_vars', [$this, 'add_query_vars']);
@@ -25,38 +25,39 @@ class Redirector {
     /**
      * Adiciona variável de query personalizada
      */
-    public function add_query_vars($vars) {
-        $vars[] = 'wpus_short';
+	public function add_query_vars($vars) {
+		$vars[] = 'urlshbym_short';
         return $vars;
     }
 
     /**
      * Gerencia o redirecionamento das URLs curtas
      */
-    public function handle_redirect() {
-        $short_code = get_query_var('wpus_short');
+	public function handle_redirect() {
+		$short_code = get_query_var('urlshbym_short');
         
         if (empty($short_code)) {
             return;
         }
 
-        // Tenta buscar do cache primeiro
-        $cache_key = 'wpus_short_' . $short_code;
-        $result = wp_cache_get($cache_key, 'url_shortener');
-
-        if (false === $result) {
-            global $wpdb;
-            
-            // Busca o código curto na tabela
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-            $result = $wpdb->get_row($wpdb->prepare(
-                "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
-                $short_code
-            ));
-
-            if ($result) {
-                wp_cache_set($cache_key, $result, 'url_shortener', HOUR_IN_SECONDS);
-            }
+		// Tenta buscar do cache primeiro
+		$cache_key = 'urlshbym_short_' . $short_code;
+		$result = wp_cache_get($cache_key, 'urlshbym_cache');
+		
+		if (false === $result) {
+			global $wpdb;
+			
+			// Busca o código curto na tabela
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+			$result = $wpdb->get_row($wpdb->prepare(
+				"SELECT * FROM {$wpdb->prefix}urlshbym_short_urls WHERE short_code = %s",
+				$short_code
+			));
+			
+			// Salva no cache por 1 hora
+			if ($result) {
+				wp_cache_set($cache_key, $result, 'urlshbym_cache', HOUR_IN_SECONDS);
+			}
         }
         
         if (!$result) {
@@ -96,11 +97,11 @@ class Redirector {
     /**
      * Tracking de cliques (preparado para implementação futura)
      */
-    private function track_click($id, $short_code) {
+	private function track_click($id, $short_code) {
         // Implementação futura: salvar cliques em tabela separada
         // Por enquanto, apenas incrementa um contador no post meta
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'url_shortener';
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'urlshbym_short_urls';
         
         // Futuramente, criar tabela de clicks com informações como:
         // - IP do visitante
@@ -109,7 +110,7 @@ class Redirector {
         // - Data/hora do acesso
         // - Geolocalização
         
-        // Por enquanto, só registramos que houve acesso
-        do_action('wpus_short_url_clicked', $short_code, $id);
+		// Por enquanto, só registramos que houve acesso
+		do_action('urlshbym_short_url_clicked', $short_code, $id);
     }
 }

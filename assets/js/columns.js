@@ -1,5 +1,5 @@
 /**
- * Columns JavaScript para URL Shortener
+ * Columns JavaScript para URL Shortener By Melk
  */
 (function($) {
     'use strict';
@@ -7,12 +7,12 @@
     $(document).ready(function() {
         
         // Handler para copiar URL
-        $(document).on('click', '.wpus-copy-btn', function(e) {
+        $(document).on('click', '.urlshbym-copy-btn', function(e) {
             e.preventDefault();
             
             const $button = $(this);
             const url = $button.data('url');
-            const $message = $button.siblings('.wpus-copied-message');
+            const $message = $button.siblings('.urlshbym-copied-message');
             
             // Tenta copiar usando a API moderna
             if (navigator.clipboard && window.isSecureContext) {

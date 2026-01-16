@@ -1,5 +1,5 @@
 <?php
-namespace WP_URL_Shortener;
+namespace Melk\UrlShortenerByMelk;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -8,10 +8,10 @@ if (!defined('ABSPATH')) {
 class Admin {
     
     public function init() {
-        add_action('admin_menu', [$this, 'add_admin_menu']);
-        add_action('admin_init', [$this, 'register_settings']);
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
-        add_action('wp_ajax_wpus_generate_bulk', [$this, 'ajax_generate_bulk']);
+		add_action('admin_menu', [$this, 'add_admin_menu']);
+		add_action('admin_init', [$this, 'register_settings']);
+		add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
+		add_action('wp_ajax_urlshbym_generate_bulk', [$this, 'ajax_generate_bulk']);
     }
 
     public function add_admin_menu() {
@@ -24,11 +24,11 @@ class Admin {
         );
     }
 
-    public function register_settings() {
-        register_setting('wpus_settings', 'wpus_enabled_post_types', [
+	public function register_settings() {
+		register_setting('urlshbym_settings', 'urlshbym_enabled_post_types', [
             'sanitize_callback' => [$this, 'sanitize_array']
         ]);
-        register_setting('wpus_settings', 'wpus_enabled_taxonomies', [
+		register_setting('urlshbym_settings', 'urlshbym_enabled_taxonomies', [
             'sanitize_callback' => [$this, 'sanitize_array']
         ]);
     }
@@ -38,28 +38,28 @@ class Admin {
     }
 
     public function enqueue_admin_assets($hook) {
-        if ($hook !== 'settings_page_url-shortener-by-melk') {
+		if ($hook !== 'settings_page_url-shortener-by-melk') {
             return;
         }
 
-        wp_enqueue_style(
-            'wpus-admin-css',
-            URL_SHORTENER_PLUGIN_URL . 'assets/css/admin.css',
-            [],
-            URL_SHORTENER_VERSION
-        );
+		wp_enqueue_style(
+			'urlshbym-admin-css',
+			URLSHBYM_PLUGIN_URL . 'assets/css/admin.css',
+			[],
+			URLSHBYM_VERSION
+		);
 
-        wp_enqueue_script(
-            'wpus-admin-js',
-            URL_SHORTENER_PLUGIN_URL . 'assets/js/admin.js',
-            ['jquery'],
-            URL_SHORTENER_VERSION,
-            true
-        );
+		wp_enqueue_script(
+			'urlshbym-admin-js',
+			URLSHBYM_PLUGIN_URL . 'assets/js/admin.js',
+			['jquery'],
+			URLSHBYM_VERSION,
+			true
+		);
 
-        wp_localize_script('wpus-admin-js', 'wpusAdmin', [
+		wp_localize_script('urlshbym-admin-js', 'urlshbymAdmin', [
             'ajaxurl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('wpus_generate_bulk'),
+			'nonce' => wp_create_nonce('urlshbym_generate_bulk'),
             'strings' => [
                 'generating' => __('Gerando URLs curtas...', 'url-shortener-by-melk'),
                 'success' => __('URLs curtas geradas com sucesso!', 'url-shortener-by-melk'),
@@ -74,18 +74,18 @@ class Admin {
         }
 
         // Salva configurações se o formulário foi enviado
-        if (isset($_POST['wpus_save_settings']) && check_admin_referer('wpus_settings_nonce')) {
-            $post_types = isset($_POST['wpus_enabled_post_types']) ? array_map('sanitize_text_field', wp_unslash($_POST['wpus_enabled_post_types'])) : [];
-            $taxonomies = isset($_POST['wpus_enabled_taxonomies']) ? array_map('sanitize_text_field', wp_unslash($_POST['wpus_enabled_taxonomies'])) : [];
+		if (isset($_POST['urlshbym_save_settings']) && check_admin_referer('urlshbym_settings_nonce')) {
+			$post_types = isset($_POST['urlshbym_enabled_post_types']) ? array_map('sanitize_text_field', wp_unslash($_POST['urlshbym_enabled_post_types'])) : [];
+			$taxonomies = isset($_POST['urlshbym_enabled_taxonomies']) ? array_map('sanitize_text_field', wp_unslash($_POST['urlshbym_enabled_taxonomies'])) : [];
             
-            update_option('wpus_enabled_post_types', $post_types);
-            update_option('wpus_enabled_taxonomies', $taxonomies);
+			update_option('urlshbym_enabled_post_types', $post_types);
+			update_option('urlshbym_enabled_taxonomies', $taxonomies);
             
             echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Configurações salvas com sucesso!', 'url-shortener-by-melk') . '</p></div>';
         }
 
-        $enabled_post_types = get_option('wpus_enabled_post_types', ['post', 'page']);
-        $enabled_taxonomies = get_option('wpus_enabled_taxonomies', ['category', 'post_tag']);
+		$enabled_post_types = get_option('urlshbym_enabled_post_types', ['post', 'page']);
+		$enabled_taxonomies = get_option('urlshbym_enabled_taxonomies', ['category', 'post_tag']);
         
         // Obtém todos os post types públicos
         $post_types = get_post_types(['public' => true], 'objects');
@@ -93,11 +93,11 @@ class Admin {
         // Obtém todas as taxonomias públicas
         $taxonomies = get_taxonomies(['public' => true], 'objects');
         
-        include URL_SHORTENER_PLUGIN_DIR . 'admin/settings-page.php';
+        include URLSHBYM_PLUGIN_DIR . 'admin/settings-page.php';
     }
 
-    public function ajax_generate_bulk() {
-        check_ajax_referer('wpus_generate_bulk', 'nonce');
+	public function ajax_generate_bulk() {
+		check_ajax_referer('urlshbym_generate_bulk', 'nonce');
 
         if (!current_user_can('manage_options')) {
             wp_send_json_error(['message' => __('Permissão negada.', 'url-shortener-by-melk')]);

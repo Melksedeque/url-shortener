@@ -1,19 +1,19 @@
 /**
- * Admin JavaScript para WP URL Shortener
+ * Admin JavaScript para URL Shortener By Melk
  */
 (function($) {
     'use strict';
 
     $(document).ready(function() {
         
-        // Handler para geração em massa
-        $('.wpus-generate-bulk').on('click', function(e) {
+		// Handler para geração em massa
+		$('.urlshbym-generate-bulk').on('click', function(e) {
             e.preventDefault();
             
             const $button = $(this);
             const type = $button.data('type');
             const name = $button.data('name');
-            const $result = $('#wpus-bulk-result');
+            const $result = $('#urlshbym-bulk-result');
             
             // Previne múltiplos cliques
             if ($button.hasClass('loading')) {
@@ -24,33 +24,33 @@
             $button.addClass('loading').prop('disabled', true);
             $result.hide().removeClass('success error');
             
-            // Faz requisição AJAX
-            $.ajax({
-                url: wpusAdmin.ajaxurl,
+				// Faz requisição AJAX
+				$.ajax({
+					url: urlshbymAdmin.ajaxurl,
                 type: 'POST',
-                data: {
-                    action: 'wpus_generate_bulk',
-                    nonce: wpusAdmin.nonce,
+					data: {
+						action: 'urlshbym_generate_bulk',
+						nonce: urlshbymAdmin.nonce,
                     type: type,
                     name: name
                 },
-                success: function(response) {
-                    if (response.success) {
-                        $result
-                            .addClass('success')
-                            .html('<strong>' + wpusAdmin.strings.success + '</strong><br>' + response.data.message)
+					success: function(response) {
+						if (response.success) {
+							$result
+								.addClass('success')
+								.html('<strong>' + urlshbymAdmin.strings.success + '</strong><br>' + response.data.message)
                             .fadeIn();
-                    } else {
-                        $result
-                            .addClass('error')
-                            .html('<strong>' + wpusAdmin.strings.error + '</strong><br>' + response.data.message)
+						} else {
+							$result
+								.addClass('error')
+								.html('<strong>' + urlshbymAdmin.strings.error + '</strong><br>' + response.data.message)
                             .fadeIn();
                     }
                 },
-                error: function() {
-                    $result
-                        .addClass('error')
-                        .html('<strong>' + wpusAdmin.strings.error + '</strong><br>Erro ao processar a requisição.')
+					error: function() {
+						$result
+							.addClass('error')
+							.html('<strong>' + urlshbymAdmin.strings.error + '</strong><br>Erro ao processar a requisição.')
                         .fadeIn();
                 },
                 complete: function() {

@@ -17,15 +17,15 @@ if (!defined('ABSPATH')) {
 }
 
 // Define constantes do plugin
-define('URL_SHORTENER_VERSION', '1.0.0');
-define('URL_SHORTENER_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('URL_SHORTENER_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('URL_SHORTENER_PLUGIN_FILE', __FILE__);
+define('URLSHBYM_VERSION', '1.0.0');
+define('URLSHBYM_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('URLSHBYM_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('URLSHBYM_PLUGIN_FILE', __FILE__);
 
 // Autoloader para carregar classes automaticamente
 spl_autoload_register(function ($class) {
-    $prefix = 'WP_URL_Shortener\\';
-    $base_dir = URL_SHORTENER_PLUGIN_DIR . 'includes/';
+	$prefix = 'Melk\\UrlShortenerByMelk\\';
+	$base_dir = URLSHBYM_PLUGIN_DIR . 'includes/';
 
     $len = strlen($prefix);
     if (strncmp($prefix, $class, $len) !== 0) {
@@ -41,33 +41,33 @@ spl_autoload_register(function ($class) {
 });
 
 // Carrega arquivos necessários
-require_once URL_SHORTENER_PLUGIN_DIR . 'includes/class-url-shortener.php';
-require_once URL_SHORTENER_PLUGIN_DIR . 'includes/class-admin.php';
-require_once URL_SHORTENER_PLUGIN_DIR . 'includes/class-shortcode-generator.php';
-require_once URL_SHORTENER_PLUGIN_DIR . 'includes/class-redirector.php';
-require_once URL_SHORTENER_PLUGIN_DIR . 'includes/class-admin-columns.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/class-url-shortener.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/class-admin.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/class-shortcode-generator.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/class-redirector.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/class-admin-columns.php';
 
 // Hook de ativação
-register_activation_hook(__FILE__, ['WP_URL_Shortener\URL_Shortener', 'activate']);
+register_activation_hook(__FILE__, ['Melk\\UrlShortenerByMelk\\URL_Shortener', 'activate']);
 
 // Hook de desativação
-register_deactivation_hook(__FILE__, ['WP_URL_Shortener\URL_Shortener', 'deactivate']);
+register_deactivation_hook(__FILE__, ['Melk\\UrlShortenerByMelk\\URL_Shortener', 'deactivate']);
 
 // Inicializa o plugin
-function url_shortener_init() {
-    $plugin = WP_URL_Shortener\URL_Shortener::get_instance();
-    $plugin->run();
+function urlshbym_init() {
+	$plugin = Melk\UrlShortenerByMelk\URL_Shortener::get_instance();
+	$plugin->run();
 }
-add_action('plugins_loaded', 'url_shortener_init');
+add_action('plugins_loaded', 'urlshbym_init');
 
 // Adiciona link de documentação na listagem de plugins
-function url_shortener_add_action_links($links) {
+function urlshbym_add_action_links($links) {
     $plugin_data = get_plugin_data(__FILE__);
     $plugin_uri = $plugin_data['PluginURI'];
     
     $docs_link = '<a href="' . esc_url($plugin_uri) . '#readme" target="_blank" aria-label="' . esc_attr__('Ver documentação do plugin', 'url-shortener-by-melk') . '">' . __('Documentação', 'url-shortener-by-melk') . '</a>';
     
-    array_push($links, $docs_link);
-    return $links;
+	array_push($links, $docs_link);
+	return $links;
 }
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'url_shortener_add_action_links');
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'urlshbym_add_action_links');

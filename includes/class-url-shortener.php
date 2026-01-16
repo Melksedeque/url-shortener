@@ -1,5 +1,5 @@
 <?php
-namespace WP_URL_Shortener;
+namespace Melk\UrlShortenerByMelk;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -39,42 +39,42 @@ class URL_Shortener {
         $this->admin_columns->init();
     }
 
-    public function generate_on_publish($new_status, $old_status, $post) {
+	public function generate_on_publish($new_status, $old_status, $post) {
         if ($new_status !== 'publish' || $old_status === 'publish') {
             return;
         }
 
-        $enabled_types = get_option('wpus_enabled_post_types', []);
+		$enabled_types = get_option('urlshbym_enabled_post_types', []);
         if (!in_array($post->post_type, $enabled_types)) {
             return;
         }
 
         // Gera URL curta se ainda não existir
-        $existing = get_post_meta($post->ID, '_wpus_short_code', true);
+		$existing = get_post_meta($post->ID, '_urlshbym_short_code', true);
         if (empty($existing)) {
-            $short_code = $this->generator->generate_for_post($post->ID);
-            update_post_meta($post->ID, '_wpus_short_code', $short_code);
+			$short_code = $this->generator->generate_for_post($post->ID);
+			update_post_meta($post->ID, '_urlshbym_short_code', $short_code);
         }
     }
 
-    public function generate_on_term_create($term_id, $tt_id, $taxonomy) {
-        $enabled_taxonomies = get_option('wpus_enabled_taxonomies', []);
+	public function generate_on_term_create($term_id, $tt_id, $taxonomy) {
+		$enabled_taxonomies = get_option('urlshbym_enabled_taxonomies', []);
         if (!in_array($taxonomy, $enabled_taxonomies)) {
             return;
         }
 
         // Gera URL curta se ainda não existir
-        $existing = get_term_meta($term_id, '_wpus_short_code', true);
+		$existing = get_term_meta($term_id, '_urlshbym_short_code', true);
         if (empty($existing)) {
-            $short_code = $this->generator->generate_for_term($term_id);
-            update_term_meta($term_id, '_wpus_short_code', $short_code);
+			$short_code = $this->generator->generate_for_term($term_id);
+			update_term_meta($term_id, '_urlshbym_short_code', $short_code);
         }
     }
 
-    public static function activate() {
+	public static function activate() {
         // Cria tabela para armazenar URLs curtas (futura implementação de tracking)
         global $wpdb;
-        $table_name = $wpdb->prefix . 'url_shortener';
+		$table_name = $wpdb->prefix . 'urlshbym_short_urls';
         $charset_collate = $wpdb->get_charset_collate();
 
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (
@@ -91,9 +91,9 @@ class URL_Shortener {
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
 
-        // Define opções padrão
-        add_option('wpus_enabled_post_types', ['post', 'page']);
-        add_option('wpus_enabled_taxonomies', ['category', 'post_tag']);
+		// Define opções padrão
+		add_option('urlshbym_enabled_post_types', ['post', 'page']);
+		add_option('urlshbym_enabled_taxonomies', ['category', 'post_tag']);
 
         // Instancia o redirecionador e adiciona regras de rewrite
         $redirector = new Redirector();

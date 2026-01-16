@@ -1,11 +1,11 @@
 /* Admin Columns Styles */
-.wpus-url-wrapper {
+.urlshbym-url-wrapper {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.wpus-short-url {
+.urlshbym-short-url {
     font-family: 'Courier New', Courier, monospace;
     font-size: 13px;
     background: #f0f0f1;
@@ -15,7 +15,7 @@
     font-weight: 500;
 }
 
-.wpus-copy-btn {
+.urlshbym-copy-btn {
     padding: 4px 8px !important;
     height: auto !important;
     line-height: 1 !important;
@@ -25,31 +25,31 @@
     transition: all 0.2s ease;
 }
 
-.wpus-copy-btn .dashicons {
+.urlshbym-copy-btn .dashicons {
     width: 16px;
     height: 16px;
     font-size: 16px;
     line-height: 1;
 }
 
-.wpus-copy-btn:hover {
+.urlshbym-copy-btn:hover {
     background: #2271b1;
     border-color: #2271b1;
     color: #fff;
 }
 
-.wpus-copy-btn:active {
+.urlshbym-copy-btn:active {
     transform: scale(0.95);
 }
 
-.wpus-copied-message {
+.urlshbym-copied-message {
     color: #00a32a;
     font-weight: 600;
     font-size: 12px;
-    animation: wpus-fade-in 0.3s ease;
+    animation: urlshbym-fade-in 0.3s ease;
 }
 
-@keyframes wpus-fade-in {
+@keyframes urlshbym-fade-in {
     from {
         opacity: 0;
         transform: translateY(-5px);
@@ -62,13 +62,13 @@
 
 /* Responsive ajustments */
 @media screen and (max-width: 782px) {
-    .wpus-url-wrapper {
+    .urlshbym-url-wrapper {
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
     }
     
-    .wpus-copy-btn {
+    .urlshbym-copy-btn {
         width: 100%;
     }
 }

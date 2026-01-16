@@ -1,5 +1,5 @@
 <?php
-namespace WP_URL_Shortener;
+namespace Melk\UrlShortenerByMelk;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -56,32 +56,32 @@ class Shortcode_Generator {
     /**
      * Gera URL curta para um post
      */
-    public function generate_for_post($post_id) {
+	public function generate_for_post($post_id) {
         global $wpdb;
         
         $short_code = $this->generate_hash($post_id, 'post');
         
-        // Verifica se já existe na tabela usando cache primeiro
-        $cache_key = 'wpus_check_' . $short_code;
-        $existing = wp_cache_get($cache_key, 'url_shortener');
-
-        if (false === $existing) {
-            $table_name = $wpdb->prefix . 'url_shortener';
-            // Query direta no prepare para conformidade
-            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-            $existing = $wpdb->get_row($wpdb->prepare(
-                "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
-                $short_code
-            ));
-
-            if ($existing) {
-                wp_cache_set($cache_key, $existing, 'url_shortener', HOUR_IN_SECONDS);
-            }
-        }
+		// Verifica se já existe na tabela usando cache primeiro
+		$cache_key = 'urlshbym_check_' . $short_code;
+		$existing = wp_cache_get($cache_key, 'urlshbym_cache');
+		
+		if (false === $existing) {
+			$table_name = $wpdb->prefix . 'urlshbym_short_urls';
+			// Query direta no prepare para conformidade
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+			$existing = $wpdb->get_row($wpdb->prepare(
+				"SELECT * FROM {$wpdb->prefix}urlshbym_short_urls WHERE short_code = %s",
+				$short_code
+			));
+			
+			if ($existing) {
+				wp_cache_set($cache_key, $existing, 'urlshbym_cache', HOUR_IN_SECONDS);
+			}
+		}
         
-        // Se não existe, insere na tabela
-        if (!$existing) {
-            $table_name = $wpdb->prefix . 'url_shortener';
+		// Se não existe, insere na tabela
+		if (!$existing) {
+			$table_name = $wpdb->prefix . 'urlshbym_short_urls';
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $wpdb->insert(
                 $table_name,
@@ -100,25 +100,25 @@ class Shortcode_Generator {
     /**
      * Gera URL curta para um termo (categoria/tag)
      */
-    public function generate_for_term($term_id) {
+	public function generate_for_term($term_id) {
         global $wpdb;
         
         $short_code = $this->generate_hash($term_id, 'term');
         
-        // 1. Defina uma chave única para o cache baseada no short_code
-        $cache_key = 'short_url_' . md5($short_code);
-        $group     = 'url_shortener_queries';
+		// 1. Defina uma chave única para o cache baseada no short_code
+		$cache_key = 'urlshbym_short_' . md5($short_code);
+        $group     = 'urlshbym_cache_queries';
 
         // 2. Tenta recuperar o resultado do cache primeiro
         $existing = wp_cache_get($cache_key, $group);
 
-        if (false === $existing) {
+		if (false === $existing) {
             // 3. Se não estiver no cache, faz a consulta ao banco
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-            $existing = $wpdb->get_row($wpdb->prepare(
-                "SELECT * FROM {$wpdb->prefix}url_shortener WHERE short_code = %s",
-                $short_code
-            ));
+			$existing = $wpdb->get_row($wpdb->prepare(
+				"SELECT * FROM {$wpdb->prefix}urlshbym_short_urls WHERE short_code = %s",
+				$short_code
+			));
 
             // 4. Salva o resultado no cache por 1 hora (3600 segundos) para evitar consultas repetitivas
             if ($existing) {
@@ -126,9 +126,9 @@ class Shortcode_Generator {
             }
         }
         
-        // Se não existe, insere na tabela
-        if (!$existing) {
-            $table_name = $wpdb->prefix . 'url_shortener';
+		// Se não existe, insere na tabela
+		if (!$existing) {
+			$table_name = $wpdb->prefix . 'urlshbym_short_urls';
             // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
             $wpdb->insert(
                 $table_name,
@@ -165,11 +165,11 @@ class Shortcode_Generator {
         $posts = get_posts($args);
         $generated = 0;
         
-        foreach ($posts as $post_id) {
-            $existing = get_post_meta($post_id, '_wpus_short_code', true);
+		foreach ($posts as $post_id) {
+			$existing = get_post_meta($post_id, '_urlshbym_short_code', true);
             if (empty($existing)) {
-                $short_code = $this->generate_for_post($post_id);
-                update_post_meta($post_id, '_wpus_short_code', $short_code);
+				$short_code = $this->generate_for_post($post_id);
+				update_post_meta($post_id, '_urlshbym_short_code', $short_code);
                 $generated++;
             }
         }
@@ -188,15 +188,22 @@ class Shortcode_Generator {
         
         $generated = 0;
         
-        foreach ($terms as $term) {
-            $existing = get_term_meta($term->term_id, '_wpus_short_code', true);
+		foreach ($terms as $term) {
+			$existing = get_term_meta($term->term_id, '_urlshbym_short_code', true);
             if (empty($existing)) {
-                $short_code = $this->generate_for_term($term->term_id);
-                update_term_meta($term->term_id, '_wpus_short_code', $short_code);
+				$short_code = $this->generate_for_term($term->term_id);
+				update_term_meta($term->term_id, '_urlshbym_short_code', $short_code);
                 $generated++;
             }
         }
         
         return $generated;
+    }
+
+    public function clean_cache() {
+        $group     = 'urlshbym_cache_queries';
+        $cache_key = 'last_generated_code';
+        
+        wp_cache_delete($cache_key, $group);
     }
 }
