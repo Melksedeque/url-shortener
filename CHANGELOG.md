@@ -35,12 +35,12 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
   - Rewrite rules otimizadas
   - Redirecionamento 301 (permanente) para SEO
   - Tratamento de erro 404 para códigos inexistentes
-  - Hook `wpus_short_url_clicked` para extensões futuras
+  - Hook `urlshbym_short_url_clicked` para extensões futuras
 
 - **Banco de Dados**
-  - Tabela `wp_url_shortener` para armazenar URLs
-  - Post meta `_wpus_short_code` para posts
-  - Term meta `_wpus_short_code` para termos
+  - Tabela `wp_urlshbym_short_urls` para armazenar URLs
+  - Post meta `_urlshbym_short_code` para posts
+  - Term meta `_urlshbym_short_code` para termos
   - Índices otimizados para performance
 
 - **Assets**
