@@ -83,6 +83,23 @@ Na mesma página de configurações:
 
 ---
 
+## 🧑‍💻 Para desenvolvedores
+
+- **Namespace principal:** `Melk\\UrlShortenerByMelk`.
+- **Prefixo único:** todas as funções, options, metas e hooks utilizam o prefixo `urlshbym_`, conforme as diretrizes oficiais do WordPress para evitar _naming collisions_.
+- **Options no banco:**
+  - `urlshbym_enabled_post_types`
+  - `urlshbym_enabled_taxonomies`
+- **Meta keys:**
+  - `_urlshbym_short_code` em posts
+  - `_urlshbym_short_code` em termos (taxonomias)
+- **Tabela de banco de dados:** `{$wpdb->prefix}urlshbym_short_urls` (criada na ativação para armazenar mapeamentos `short_code -> objeto`).
+- **Hooks principais:**
+  - `urlshbym_short_url_clicked` — action disparada sempre que uma URL curta é acessada, recebendo o `$short_code` e o ID interno do registro.
+- **Regras de rewrite:** as URLs curtas são resolvidas via rewrite rule para `index.php?urlshbym_short={codigo}`, permitindo estruturas como `seusite.com/abc12`.
+
+Esses detalhes garantem que o plugin seja seguro para ser estendido em ambientes complexos, evitando conflitos com outros plugins e temas.
+
 ## 🤝 Contribuindo
 
 Contribuições são bem-vindas! Se você tiver sugestões, correções de bugs ou novas funcionalidades:

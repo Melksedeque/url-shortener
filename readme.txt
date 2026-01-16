@@ -37,6 +37,21 @@ Yes! You can enable which post types you want to generate short URLs for in the 
 = How are URLs generated? =
 We use a secure Base62 algorithm to create short and unique strings (e.g., `abc12`) based on the post ID.
 
+== Developer Notes ==
+
+* Namespace: `Melk\\UrlShortenerByMelk`.
+* Unique prefix: all functions, options, meta keys and hooks use the `urlshbym_` prefix, following the WordPress Plugin Handbook recommendations to avoid naming collisions.
+* Options stored in the database:
+  * `urlshbym_enabled_post_types`
+  * `urlshbym_enabled_taxonomies`
+* Meta keys:
+  * `_urlshbym_short_code` on posts
+  * `_urlshbym_short_code` on terms (taxonomies)
+* Database table: `{$wpdb->prefix}urlshbym_short_urls` is created on activation to store the mapping between short codes and objects.
+* Main hook:
+  * `urlshbym_short_url_clicked` — fired whenever a short URL is accessed, receiving the short code and the internal record ID.
+* Rewrite rules: short URLs are handled through a rewrite rule that maps patterns like `/abc12` to `index.php?urlshbym_short=abc12`.
+
 == Changelog ==
 
 = 1.0.0 =
