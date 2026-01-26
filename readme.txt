@@ -52,6 +52,12 @@ We use a secure Base62 algorithm to create short and unique strings (e.g., `abc1
   * `urlshbym_short_url_clicked` — fired whenever a short URL is accessed, receiving the short code and the internal record ID.
 * Rewrite rules: short URLs are handled through a rewrite rule that maps patterns like `/abc12` to `index.php?urlshbym_short=abc12`.
 
+== Screenshots ==
+
+1. Admin settings page where you can choose post types and taxonomies.
+2. Quick copy button in the posts list table.
+3. Bulk generation tool for existing content.
+
 == Changelog ==
 
 = 1.0.0 =
