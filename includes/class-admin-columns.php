@@ -34,7 +34,7 @@ class Admin_Columns {
             
 				// Adiciona a coluna após a coluna 'date'
 				if ($key === 'date') {
-					$new_columns['urlshbym_short_url'] = esc_html__('URL Curta', 'url-shortener-by-melk');
+					$new_columns['urlshbym_short_url'] = esc_html__('Short URL', 'url-shortener-by-melk');
 				}
         }
         
@@ -49,7 +49,7 @@ class Admin_Columns {
 		$short_code = get_post_meta($post_id, '_urlshbym_short_code', true);
         
         if (empty($short_code)) {
-            echo '<span style="color: #999;">' . esc_html__('Não gerada', 'url-shortener-by-melk') . '</span>';
+            echo '<span style="color: #999;">' . esc_html__('Not generated', 'url-shortener-by-melk') . '</span>';
             return;
         }
 
@@ -67,7 +67,7 @@ class Admin_Columns {
             
 				// Adiciona a coluna após a coluna 'slug'
 				if ($key === 'slug') {
-					$new_columns['urlshbym_short_url'] = esc_html__('URL Curta', 'url-shortener-by-melk');
+					$new_columns['urlshbym_short_url'] = esc_html__('Short URL', 'url-shortener-by-melk');
 				}
         }
         
@@ -82,7 +82,7 @@ class Admin_Columns {
 		$short_code = get_term_meta($term_id, '_urlshbym_short_code', true);
         
         if (empty($short_code)) {
-            return '<span style="color: #999;">' . esc_html__('Não gerada', 'url-shortener-by-melk') . '</span>';
+            return '<span style="color: #999;">' . esc_html__('Not generated', 'url-shortener-by-melk') . '</span>';
         }
 
         $generator = new Shortcode_Generator();
@@ -101,12 +101,12 @@ class Admin_Columns {
                 type="button" 
                 class="button button-small urlshbym-copy-btn" 
                 data-url="<?php echo esc_attr($short_url); ?>"
-                title="<?php esc_attr_e('Copiar URL', 'url-shortener-by-melk'); ?>"
+                title="<?php esc_attr_e('Copy URL', 'url-shortener-by-melk'); ?>"
             >
                 <span class="dashicons dashicons-admin-page"></span>
             </button>
             <span class="urlshbym-copied-message" style="display: none;">
-                <?php esc_html_e('Copiado!', 'url-shortener-by-melk'); ?>
+                <?php esc_html_e('Copied!', 'url-shortener-by-melk'); ?>
             </span>
         </div>
         <?php
@@ -134,8 +134,8 @@ class Admin_Columns {
 		);
 
 		wp_localize_script('urlshbym-columns-js', 'urlshbymColumns', [
-            'copiedText' => esc_html__('Copiado!', 'url-shortener-by-melk'),
-            'copyText' => esc_html__('Copiar URL', 'url-shortener-by-melk'),
+            'copiedText' => esc_html__('Copied!', 'url-shortener-by-melk'),
+            'copyText' => esc_html__('Copy URL', 'url-shortener-by-melk'),
         ]);
     }
 }

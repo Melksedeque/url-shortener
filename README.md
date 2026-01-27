@@ -1,121 +1,123 @@
 # URL Shortener by Melk
 
-> **Plugin WordPress para criação de URLs curtas personalizadas.**
+> **WordPress plugin for creating custom short URLs.**
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![WordPress](https://img.shields.io/badge/WordPress-Tested-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://www.php.net/)
 [![Status](https://img.shields.io/badge/Status-Under%20Review-yellow.svg)](https://wordpress.org/plugins/)
 
-O **URL Shortener by Melk** é um plugin leve, eficiente e seguro para WordPress que permite gerar URLs curtas automaticamente para seus posts, páginas, categorias, tags e Custom Post Types. Ideal para compartilhamento em redes sociais e materiais de marketing.
+**URL Shortener by Melk** is a lightweight, efficient, and secure WordPress plugin that allows you to automatically generate short URLs for your posts, pages, categories, tags, and Custom Post Types. Ideal for sharing on social media and marketing materials.
 
-🚀 **Submetido e em análise pela equipe de Plugins do WordPress.org.**
-
----
-
-## ✨ Funcionalidades
-
-- 🔗 **Geração Automática:** Cria URLs curtas automaticamente ao publicar novos posts.
-- 🎯 **Suporte Abrangente:** Funciona com Posts, Páginas, Categorias, Tags e Custom Post Types.
-- 📋 **Cópia Rápida:** Botão de "Copiar" direto na listagem de posts/termos no painel admin.
-- ⚡ **Geração em Massa:** Ferramenta para gerar URLs curtas para conteúdo antigo com um clique.
-- 🚀 **Performance:** Redirecionamento rápido usando regras de rewrite nativas do WordPress.
-- 🔒 **Seguro:** Código validado, sanitizado e escapado seguindo rigorosamente os padrões do WordPress.
+🚀 **Submitted and under review by the WordPress.org Plugin Team.**
 
 ---
 
-## 🛡️ Qualidade e Segurança (Compliance)
+## ✨ Features
 
-Este plugin foi desenvolvido seguindo as melhores práticas de desenvolvimento WordPress e aprovado em testes rigorosos de qualidade (Plugin Check):
-
-- **Segurança de Banco de Dados:** Todas as consultas utilizam `wpdb->prepare()` para prevenir SQL Injection.
-- **Sanitização e Escape:** Todos os dados de entrada são sanitizados e todas as saídas são escapadas (`esc_html`, `esc_attr`, etc.) para prevenir XSS.
-- **Performance Otimizada:** Implementação de **Object Caching** (`wp_cache_get`/`wp_cache_set`) para reduzir consultas ao banco de dados em ambientes de alta tráfego.
-- **Padrões de Código:** Compatível com os padrões de codificação do WordPress (WPCS).
+- 🔗 **Automatic Generation:** Automatically creates short URLs when publishing new posts.
+- 🎯 **Comprehensive Support:** Works with Posts, Pages, Categories, Tags, and Custom Post Types.
+- 📋 **Quick Copy:** "Copy" button directly in the post/term listing in the admin panel.
+- ⚡ **Bulk Generation:** Tool to generate short URLs for old content with one click.
+- 🚀 **Performance:** Fast redirection using native WordPress rewrite rules.
+- 🔒 **Secure:** Validated, sanitized, and escaped code strictly following WordPress standards.
 
 ---
 
-## 🚀 Instalação
+## 🛡️ Quality and Security (Compliance)
+
+This plugin was developed following WordPress development best practices and approved in rigorous quality tests (Plugin Check):
+
+- **Database Security:** All queries use `wpdb->prepare()` to prevent SQL Injection.
+- **Sanitization and Escaping:** All input data is sanitized and all outputs are escaped (`esc_html`, `esc_attr`, etc.) to prevent XSS.
+- **Optimized Performance:** Implementation of **Object Caching** (`wp_cache_get`/`wp_cache_set`) to reduce database queries in high-traffic environments.
+- **Code Standards:** Compatible with WordPress Coding Standards (WPCS).
+
+---
+
+## 🚀 Installation
 
 ### Via Upload (ZIP)
 
-1. Faça o download do arquivo `.zip` deste repositório.
-2. No painel do WordPress, vá em **Plugins > Adicionar Novo**.
-3. Clique em **Enviar Plugin** e selecione o arquivo baixado.
-4. Clique em **Instalar Agora** e depois em **Ativar**.
+1. Download the `.zip` file from this repository.
+2. In the WordPress dashboard, go to **Plugins > Add New**.
+3. Click **Upload Plugin** and select the downloaded file.
+4. Click **Install Now** and then **Activate**.
 
-### Via Git (Para Desenvolvedores)
+### Via Git (For Developers)
 
-1. Navegue até a pasta de plugins do seu WordPress:
+1. Navigate to your WordPress plugins folder:
    ```bash
    cd wp-content/plugins
    ```
-2. Clone o repositório:
+2. Clone the repository:
    ```bash
    git clone https://github.com/Melksedeque/url-shortener.git
    ```
-3. Ative o plugin no painel do WordPress.
+3. Activate the plugin in the WordPress dashboard.
 
 ---
 
-## 📖 Como Usar
+## 📖 How to Use
 
-### Configuração Inicial
+### Initial Configuration
 
-1. Após ativar, vá em **Configurações > URL Shortener**.
-2. Selecione quais **Tipos de Post** (Posts, Páginas, etc.) devem ter URLs curtas.
-3. Selecione quais **Taxonomias** (Categorias, Tags, etc.) devem ter URLs curtas.
-4. Clique em **Salvar Configurações**.
+1. After activation, go to **Settings > URL Shortener**.
+2. Select which **Post Types** (Posts, Pages, etc.) should have short URLs.
+3. Select which **Taxonomies** (Categories, Tags, etc.) should have short URLs.
+4. Click **Save Settings**.
 
-### Gerando URLs para Conteúdo Antigo
+### Generating URLs for Old Content
 
-Na mesma página de configurações:
-1. Localize a seção **Gerar URLs em Massa**.
-2. Clique no botão **Gerar URLs** para os tipos de conteúdo desejados.
-3. Aguarde a barra de progresso ou mensagem de conclusão.
+On the same settings page:
+1. Locate the **Generate Short URLs for Existing Content** section.
+2. Click the **Generate URLs** button for the desired content types.
+3. Wait for the progress bar or completion message.
 
-### Copiando URLs Curtas
+### Copying Short URLs
 
-1. Vá para a listagem de posts (**Posts > Todos os Posts**) ou categorias.
-2. Localize a coluna **URL Curta**.
-3. Clique no botão de **Copiar** ao lado do código da URL.
-4. A URL curta (ex: `seusite.com/a1b2c`) será copiada para sua área de transferência.
+1. Go to the post list (**Posts > All Posts**) or categories.
+2. Locate the **Short URL** column.
+3. Click the **Copy** button next to the URL code.
+4. The short URL (e.g., `yoursite.com/a1b2c`) will be copied to your clipboard.
 
 ---
 
-## 🧑‍💻 Para desenvolvedores
+## 🧑‍💻 For Developers
 
-- **Namespace principal:** `Melk\\UrlShortenerByMelk`.
-- **Prefixo único:** todas as funções, options, metas e hooks utilizam o prefixo `urlshbym_`, conforme as diretrizes oficiais do WordPress para evitar _naming collisions_.
-- **Options no banco:**
+- **Main Namespace:** `Melk\\UrlShortenerByMelk`.
+- **Unique Prefix:** All functions, options, metas, and hooks use the `urlshbym_` prefix, following official WordPress guidelines to avoid _naming collisions_.
+- **Database Options:**
   - `urlshbym_enabled_post_types`
   - `urlshbym_enabled_taxonomies`
-- **Meta keys:**
-  - `_urlshbym_short_code` em posts
-  - `_urlshbym_short_code` em termos (taxonomias)
-- **Tabela de banco de dados:** `{$wpdb->prefix}urlshbym_short_urls` (criada na ativação para armazenar mapeamentos `short_code -> objeto`).
-- **Hooks principais:**
-  - `urlshbym_short_url_clicked` — action disparada sempre que uma URL curta é acessada, recebendo o `$short_code` e o ID interno do registro.
-- **Regras de rewrite:** as URLs curtas são resolvidas via rewrite rule para `index.php?urlshbym_short={codigo}`, permitindo estruturas como `seusite.com/abc12`.
+- **Meta Keys:**
+  - `_urlshbym_short_code` on posts
+  - `_urlshbym_short_code` on terms (taxonomies)
+- **Database Table:** `{$wpdb->prefix}urlshbym_short_urls` (created on activation to store `short_code -> object` mappings).
+- **Main Hooks:**
+  - `urlshbym_short_url_clicked` — action fired whenever a short URL is accessed, receiving the `$short_code` and the internal record ID.
+- **Rewrite Rules:** Short URLs are resolved via rewrite rule to `index.php?urlshbym_short={code}`, allowing structures like `yoursite.com/abc12`.
 
-Esses detalhes garantem que o plugin seja seguro para ser estendido em ambientes complexos, evitando conflitos com outros plugins e temas.
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Se você tiver sugestões, correções de bugs ou novas funcionalidades:
-
-1. Faça um Fork do projeto.
-2. Crie uma Branch para sua Feature (`git checkout -b feature/NovaFuncionalidade`).
-3. Faça o Commit de suas mudanças (`git commit -m 'Adiciona Nova Funcionalidade'`).
-4. Faça o Push para a Branch (`git push origin feature/NovaFuncionalidade`).
-5. Abra um Pull Request.
+These details ensure the plugin is safe to extend in complex environments, avoiding conflicts with other plugins and themes.
 
 ---
 
-## 📝 Licença
+## 🤝 Contributing
 
-Este projeto está licenciado sob a Licença GPL v3 - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Contributions are welcome! If you have suggestions, bug fixes, or new features:
+
+1. Fork the project.
+2. Create a Branch for your Feature (`git checkout -b feature/NewFeature`).
+3. Commit your changes (`git commit -m 'Add New Feature'`).
+4. Push to the Branch (`git push origin feature/NewFeature`).
+5. Open a Pull Request.
 
 ---
 
-Desenvolvido com ❤️ por [Melksedeque Silva](https://github.com/Melksedeque).
+## 📝 License
+
+This project is licensed under the GPL v3 - see the [LICENSE](LICENSE) file for more details.
+
+---
+
+Developed with ❤️ by [Melksedeque Silva](https://github.com/Melksedeque).

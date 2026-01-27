@@ -61,9 +61,9 @@ class Admin {
             'ajaxurl' => admin_url('admin-ajax.php'),
 			'nonce' => wp_create_nonce('urlshbym_generate_bulk'),
             'strings' => [
-                'generating' => __('Gerando URLs curtas...', 'url-shortener-by-melk'),
-                'success' => __('URLs curtas geradas com sucesso!', 'url-shortener-by-melk'),
-                'error' => __('Erro ao gerar URLs curtas.', 'url-shortener-by-melk'),
+                'generating' => __('Generating short URLs...', 'url-shortener-by-melk'),
+                'success' => __('Short URLs generated successfully!', 'url-shortener-by-melk'),
+                'error' => __('Error generating short URLs.', 'url-shortener-by-melk'),
             ]
         ]);
     }
@@ -81,7 +81,7 @@ class Admin {
 			update_option('urlshbym_enabled_post_types', $post_types);
 			update_option('urlshbym_enabled_taxonomies', $taxonomies);
             
-            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Configurações salvas com sucesso!', 'url-shortener-by-melk') . '</p></div>';
+            echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Settings saved successfully!', 'url-shortener-by-melk') . '</p></div>';
         }
 
 		$enabled_post_types = get_option('urlshbym_enabled_post_types', ['post', 'page']);
@@ -100,14 +100,14 @@ class Admin {
 		check_ajax_referer('urlshbym_generate_bulk', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('Permissão negada.', 'url-shortener-by-melk')]);
+            wp_send_json_error(['message' => __('Permission denied.', 'url-shortener-by-melk')]);
         }
 
         $type = isset($_POST['type']) ? sanitize_text_field(wp_unslash($_POST['type'])) : '';
         $name = isset($_POST['name']) ? sanitize_text_field(wp_unslash($_POST['name'])) : '';
 
         if (empty($type) || empty($name)) {
-            wp_send_json_error(['message' => __('Parâmetros inválidos.', 'url-shortener-by-melk')]);
+            wp_send_json_error(['message' => __('Invalid parameters.', 'url-shortener-by-melk')]);
         }
 
         $generator = new Shortcode_Generator();
@@ -122,7 +122,7 @@ class Admin {
         wp_send_json_success([
             'message' => sprintf(
                 /* translators: %d: Number of generated URLs */
-                __('%d URLs curtas foram geradas com sucesso!', 'url-shortener-by-melk'),
+                __('%d short URLs were generated successfully!', 'url-shortener-by-melk'),
                 $generated
             ),
             'count' => $generated

@@ -11,9 +11,9 @@ if (!defined('ABSPATH')) {
         
         <!-- Seção de Configurações -->
         <div class="urlshbym-card">
-            <h2><?php esc_html_e('Configurações de Geração Automática', 'url-shortener-by-melk'); ?></h2>
+            <h2><?php esc_html_e('Automatic Generation Settings', 'url-shortener-by-melk'); ?></h2>
             <p class="description">
-                <?php esc_html_e('Selecione os tipos de conteúdo que devem ter URLs curtas geradas automaticamente ao serem publicados.', 'url-shortener-by-melk'); ?>
+                <?php esc_html_e('Select the content types that should have short URLs automatically generated when published.', 'url-shortener-by-melk'); ?>
             </p>
             
             <form method="post" action="">
@@ -42,14 +42,14 @@ if (!defined('ABSPATH')) {
                                 <?php endforeach; ?>
                             </fieldset>
                             <p class="description">
-                                <?php esc_html_e('URLs curtas serão criadas automaticamente quando novos posts desses tipos forem publicados.', 'url-shortener-by-melk'); ?>
+                                <?php esc_html_e('Short URLs will be automatically created when new posts of these types are published.', 'url-shortener-by-melk'); ?>
                             </p>
                         </td>
                     </tr>
                     
                     <tr>
                         <th scope="row">
-                            <?php esc_html_e('Taxonomias', 'url-shortener-by-melk'); ?>
+                            <?php esc_html_e('Taxonomies', 'url-shortener-by-melk'); ?>
                         </th>
                         <td>
                             <fieldset>
@@ -69,7 +69,7 @@ if (!defined('ABSPATH')) {
                                 <?php endforeach; ?>
                             </fieldset>
                             <p class="description">
-                                <?php esc_html_e('URLs curtas serão criadas automaticamente quando novos termos dessas taxonomias forem criados.', 'url-shortener-by-melk'); ?>
+                                <?php esc_html_e('Short URLs will be automatically created when new terms of these taxonomies are created.', 'url-shortener-by-melk'); ?>
                             </p>
                         </td>
                     </tr>
@@ -80,7 +80,7 @@ if (!defined('ABSPATH')) {
 					type="submit" 
 					name="urlshbym_save_settings" 
                         class="button button-primary" 
-                        value="<?php esc_attr_e('Salvar Configurações', 'url-shortener-by-melk'); ?>"
+                        value="<?php esc_attr_e('Save Settings', 'url-shortener-by-melk'); ?>"
                     >
                 </p>
             </form>
@@ -88,9 +88,9 @@ if (!defined('ABSPATH')) {
 
         <!-- Seção de Geração Retroativa -->
         <div class="urlshbym-card">
-            <h2><?php esc_html_e('Gerar URLs Curtas para Conteúdo Existente', 'url-shortener-by-melk'); ?></h2>
+            <h2><?php esc_html_e('Generate Short URLs for Existing Content', 'url-shortener-by-melk'); ?></h2>
             <p class="description">
-                <?php esc_html_e('Use os botões abaixo para gerar URLs curtas para todo o conteúdo já publicado que ainda não possui uma URL curta.', 'url-shortener-by-melk'); ?>
+                <?php esc_html_e('Use the buttons below to generate short URLs for all published content that does not yet have a short URL.', 'url-shortener-by-melk'); ?>
             </p>
             
             <div class="urlshbym-bulk-actions">
@@ -115,7 +115,7 @@ if (!defined('ABSPATH')) {
                     <?php endforeach; ?>
                 </div>
 
-                <h3><?php esc_html_e('Taxonomias', 'url-shortener-by-melk'); ?></h3>
+                <h3><?php esc_html_e('Taxonomies', 'url-shortener-by-melk'); ?></h3>
                 <div class="urlshbym-button-group">
                     <?php foreach ($taxonomies as $taxonomy) : ?>
                         <?php if (in_array($taxonomy->name, ['post_format', 'nav_menu'])) continue; ?>
@@ -142,13 +142,13 @@ if (!defined('ABSPATH')) {
 
         <!-- Seção de Informações -->
         <div class="urlshbym-card urlshbym-info-card">
-            <h2><?php esc_html_e('Como Funciona', 'url-shortener-by-melk'); ?></h2>
+            <h2><?php esc_html_e('How it Works', 'url-shortener-by-melk'); ?></h2>
             <ul>
-                <li><?php esc_html_e('URLs curtas são geradas usando Base62 (letras maiúsculas, minúsculas e números).', 'url-shortener-by-melk'); ?></li>
-                <li><?php esc_html_e('Cada URL curta tem entre 5-7 caracteres e é baseada no ID do conteúdo, garantindo consistência.', 'url-shortener-by-melk'); ?></li>
-                <li><?php esc_html_e('As URLs curtas aparecem na raiz do seu domínio: exemplo.com.br/abc123', 'url-shortener-by-melk'); ?></li>
-                <li><?php esc_html_e('Você pode copiar URLs curtas diretamente das tabelas de listagem de posts e termos.', 'url-shortener-by-melk'); ?></li>
-                <li><?php esc_html_e('Todos os redirecionamentos usam código 301 (permanente) para SEO.', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('Short URLs are generated using Base62 (uppercase letters, lowercase letters, and numbers).', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('Each short URL is 5-7 characters long and is based on the content ID, ensuring consistency.', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('Short URLs appear at the root of your domain: example.com/abc123', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('You can copy short URLs directly from the post and term listing tables.', 'url-shortener-by-melk'); ?></li>
+                <li><?php esc_html_e('All redirects use 301 code (permanent) for SEO.', 'url-shortener-by-melk'); ?></li>
             </ul>
         </div>
 

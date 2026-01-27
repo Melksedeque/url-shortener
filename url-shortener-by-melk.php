@@ -2,7 +2,7 @@
 /**
  * Plugin Name: URL Shortener by Melk
  * Plugin URI: https://github.com/Melksedeque/plugin-url-shortener-wordpress
- * Description: Crie URLs curtas para posts, páginas, categorias, tags e custom post types do seu WordPress.
+ * Description: Create short URLs for posts, pages, categories, tags, and custom post types in your WordPress.
  * Version: 1.0.0
  * Author: Melksedeque Silva
  * Author URI: https://github.com/Melksedeque
@@ -65,7 +65,7 @@ function urlshbym_add_action_links($links) {
     $plugin_data = get_plugin_data(__FILE__);
     $plugin_uri = $plugin_data['PluginURI'];
     
-    $docs_link = '<a href="' . esc_url($plugin_uri) . '#readme" target="_blank" aria-label="' . esc_attr__('Ver documentação do plugin', 'url-shortener-by-melk') . '">' . __('Documentação', 'url-shortener-by-melk') . '</a>';
+    $docs_link = '<a href="' . esc_url($plugin_uri) . '#readme" target="_blank" aria-label="' . esc_attr__('View plugin documentation', 'url-shortener-by-melk') . '">' . __('Documentation', 'url-shortener-by-melk') . '</a>';
     
 	array_push($links, $docs_link);
 	return $links;
