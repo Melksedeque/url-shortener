@@ -3,7 +3,7 @@
  * Plugin Name: URL Shortener by Melk
  * Plugin URI: https://github.com/Melksedeque/plugin-url-shortener-wordpress
  * Description: Create short URLs for posts, pages, categories, tags, and custom post types in your WordPress.
- * Version: 1.1.0
+ * Version: 1.0.1
  * Author: Melksedeque Silva
  * Author URI: https://github.com/Melksedeque
  * License: GPL v3 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define constantes do plugin
-define('URLSHBYM_VERSION', '1.1.0');
+define('URLSHBYM_VERSION', '1.0.1');
 define('URLSHBYM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('URLSHBYM_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('URLSHBYM_PLUGIN_FILE', __FILE__);
@@ -46,12 +46,6 @@ require_once URLSHBYM_PLUGIN_DIR . 'includes/class-admin.php';
 require_once URLSHBYM_PLUGIN_DIR . 'includes/class-shortcode-generator.php';
 require_once URLSHBYM_PLUGIN_DIR . 'includes/class-redirector.php';
 require_once URLSHBYM_PLUGIN_DIR . 'includes/class-admin-columns.php';
-require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-social-config.php';
-require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-text-utils.php';
-require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-social-counter.php';
-require_once URLSHBYM_PLUGIN_DIR . 'includes/social/interface-generator.php';
-require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-rule-generator.php';
-require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-social-kit.php';
 
 // Hook de ativação
 register_activation_hook(__FILE__, ['Melk\\UrlShortenerByMelk\\URL_Shortener', 'activate']);
@@ -77,3 +71,15 @@ function urlshbym_add_action_links($links) {
 	return $links;
 }
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'urlshbym_add_action_links');
+
+// Ponto de integração opcional para outros plugins by Melk (ex.: Social Kit by Melk).
+// Checar function_exists() antes de chamar evita qualquer dependência obrigatória entre os plugins.
+function urlshbym_get_short_url_for_post($post_id) {
+    $short_code = get_post_meta($post_id, '_urlshbym_short_code', true);
+    if (empty($short_code)) {
+        return false;
+    }
+
+    $generator = new Melk\UrlShortenerByMelk\Shortcode_Generator();
+    return $generator->get_short_url($short_code);
+}

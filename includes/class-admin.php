@@ -31,9 +31,6 @@ class Admin {
 		register_setting('urlshbym_settings', 'urlshbym_enabled_taxonomies', [
             'sanitize_callback' => [$this, 'sanitize_array']
         ]);
-		register_setting('urlshbym_settings', 'urlshbym_social_enabled_post_types', [
-            'sanitize_callback' => [$this, 'sanitize_array']
-        ]);
     }
 
     public function sanitize_array($input) {
@@ -80,19 +77,16 @@ class Admin {
 		if (isset($_POST['urlshbym_save_settings']) && check_admin_referer('urlshbym_settings_nonce')) {
 			$post_types = isset($_POST['urlshbym_enabled_post_types']) ? array_map('sanitize_text_field', wp_unslash($_POST['urlshbym_enabled_post_types'])) : [];
 			$taxonomies = isset($_POST['urlshbym_enabled_taxonomies']) ? array_map('sanitize_text_field', wp_unslash($_POST['urlshbym_enabled_taxonomies'])) : [];
-			$social_post_types = isset($_POST['urlshbym_social_enabled_post_types']) ? array_map('sanitize_text_field', wp_unslash($_POST['urlshbym_social_enabled_post_types'])) : [];
 
 			update_option('urlshbym_enabled_post_types', $post_types);
 			update_option('urlshbym_enabled_taxonomies', $taxonomies);
-			update_option('urlshbym_social_enabled_post_types', $social_post_types);
             
             echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Settings saved successfully!', 'url-shortener-by-melk') . '</p></div>';
         }
 
 		$enabled_post_types = get_option('urlshbym_enabled_post_types', ['post', 'page']);
 		$enabled_taxonomies = get_option('urlshbym_enabled_taxonomies', ['category', 'post_tag']);
-		$social_enabled_post_types = get_option('urlshbym_social_enabled_post_types', []);
-        
+
         // Obtém todos os post types públicos
         $post_types = get_post_types(['public' => true], 'objects');
         

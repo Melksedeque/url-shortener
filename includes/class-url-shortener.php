@@ -11,7 +11,6 @@ class URL_Shortener {
     private $generator;
     private $redirector;
     private $admin_columns;
-    private $social_kit;
 
     public static function get_instance() {
         if (null === self::$instance) {
@@ -25,7 +24,6 @@ class URL_Shortener {
         $this->generator = new Shortcode_Generator();
         $this->redirector = new Redirector();
         $this->admin_columns = new Admin_Columns();
-        $this->social_kit = new Social_Kit();
     }
 
     public function run() {
@@ -39,7 +37,6 @@ class URL_Shortener {
         // Inicializa componentes
         $this->admin->init();
         $this->admin_columns->init();
-        $this->social_kit->init();
     }
 
 	public function generate_on_publish($new_status, $old_status, $post) {

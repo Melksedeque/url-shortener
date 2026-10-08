@@ -76,43 +76,6 @@ if (!defined('ABSPATH')) {
                 </table>
         </div>
 
-        <!-- Seção do Social Kit -->
-        <div class="urlshbym-card">
-            <h2><?php esc_html_e('Social Kit (Beta)', 'url-shortener-by-melk'); ?></h2>
-            <p class="description">
-                <?php esc_html_e('Automatically generate a card label, card title, card text, and a ready-to-post X (Twitter) caption for the content types below, based on the post title, excerpt, category, and its short URL.', 'url-shortener-by-melk'); ?>
-            </p>
-
-                <table class="form-table">
-                    <tr>
-                        <th scope="row">
-                            <?php esc_html_e('Post Types', 'url-shortener-by-melk'); ?>
-                        </th>
-                        <td>
-                            <fieldset>
-                                <?php foreach ($post_types as $post_type) : ?>
-                                    <?php if ($post_type->name === 'attachment') continue; ?>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            name="urlshbym_social_enabled_post_types[]"
-                                            value="<?php echo esc_attr($post_type->name); ?>"
-                                            <?php checked(in_array($post_type->name, $social_enabled_post_types)); ?>
-                                        >
-                                        <?php echo esc_html($post_type->label); ?>
-                                        <span style="color: #666;">(<?php echo esc_html($post_type->name); ?>)</span>
-                                    </label>
-                                    <br>
-                                <?php endforeach; ?>
-                            </fieldset>
-                            <p class="description">
-                                <?php esc_html_e('A "Social Kit" panel will appear in the block editor for these content types once they have a short URL.', 'url-shortener-by-melk'); ?>
-                            </p>
-                        </td>
-                    </tr>
-                </table>
-        </div>
-
                 <p class="submit">
 			<input
 				type="submit"
@@ -188,6 +151,33 @@ if (!defined('ABSPATH')) {
                 <li><?php esc_html_e('All redirects use 301 code (permanent) for SEO.', 'url-shortener-by-melk'); ?></li>
             </ul>
         </div>
+
+        <!-- Seção de outros plugins by Melk -->
+        <?php
+        $urlshbym_other_plugins = [
+            [
+                'name' => 'Social Kit by Melk',
+                'description' => __('Automatically turns each post into a ready-to-use card label, card title, card text, and social caption. Works standalone; when URL Shortener by Melk is also active, it uses the short URL in the caption automatically.', 'url-shortener-by-melk'),
+                'url' => 'https://github.com/Melksedeque/social-kit-by-melk',
+            ],
+        ];
+        ?>
+        <?php if (!empty($urlshbym_other_plugins)) : ?>
+            <div class="urlshbym-card urlshbym-info-card">
+                <h2><?php esc_html_e('Other Plugins by Melk', 'url-shortener-by-melk'); ?></h2>
+                <ul>
+                    <?php foreach ($urlshbym_other_plugins as $urlshbym_other_plugin) : ?>
+                        <li>
+                            <strong><?php echo esc_html($urlshbym_other_plugin['name']); ?></strong>
+                            &mdash; <?php echo esc_html($urlshbym_other_plugin['description']); ?>
+                            <a href="<?php echo esc_url($urlshbym_other_plugin['url']); ?>" target="_blank" rel="noopener noreferrer">
+                                <?php esc_html_e('Learn more', 'url-shortener-by-melk'); ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
     </div>
 </div>
