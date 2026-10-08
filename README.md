@@ -125,4 +125,4 @@ This project is licensed under the GPL v3 - see the [LICENSE](LICENSE) file for 
 
 ---
 
-Developed with ❤️ by [Melksedeque Silva](https://github.com/Melksedeque).
+Developed by [Melksedeque Silva](https://github.com/Melksedeque).
