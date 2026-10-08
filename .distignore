@@ -1,0 +1,25 @@
+# Arquivos que NÃO vão para o trunk do WordPress.org.
+# Sintaxe: um padrão por linha; "/x" ancora na raiz; "x/" só casa diretórios;
+# "*" e "?" funcionam; sem barra, casa em qualquer nível.
+# (O diretório de assets definido em .wporg.json e o .git/.svn já são sempre ignorados.)
+
+.github
+.gitignore
+.gitattributes
+.distignore
+.wporg.json
+.vscode
+.idea
+node_modules
+_notas-internas
+
+*.zip
+*.log
+*.ai
+*.psd
+.DS_Store
+Thumbs.db
+
+# Documentação do GitHub (o WordPress.org usa o readme.txt)
+README.md
+CHANGELOG.md

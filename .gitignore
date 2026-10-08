@@ -69,5 +69,3 @@ Desktop.ini
 url-shortener-by-melk-*.json
 
 _notas-internas/
-# Assets do WordPress.org (vão para /assets do SVN, não para o trunk)
-_svn-assets/

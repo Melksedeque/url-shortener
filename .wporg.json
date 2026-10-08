@@ -1,0 +1,8 @@
+{
+  "slug": "url-shortener-by-melk",
+  "main_file": "url-shortener-by-melk.php",
+  "version_constant": "URLSHBYM_VERSION",
+  "readme": "readme.txt",
+  "changelog": "CHANGELOG.md",
+  "assets_dir": ".wordpress-org"
+}
