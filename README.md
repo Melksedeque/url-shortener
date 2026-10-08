@@ -21,6 +21,7 @@
 - ⚡ **Bulk Generation:** Tool to generate short URLs for old content with one click.
 - 🚀 **Performance:** Fast redirection using native WordPress rewrite rules.
 - 🔒 **Secure:** Validated, sanitized, and escaped code strictly following WordPress standards.
+- 📣 **Social Kit (Beta):** Automatically generates a card label, card title, card text, and a character-counted X (Twitter) caption for each post, with a panel in the block editor to review, edit, lock, and copy everything.
 
 ---
 
@@ -81,6 +82,13 @@ On the same settings page:
 3. Click the **Copy** button next to the URL code.
 4. The short URL (e.g., `yoursite.com/a1b2c`) will be copied to your clipboard.
 
+### Using the Social Kit (Beta)
+
+1. Go to **Settings > URL Shortener** and enable the content types you want under **Social Kit (Beta)**.
+2. Publish a post of one of those types (it needs its short URL already generated).
+3. Open the post in the block editor and look for the **Social Kit** panel in the sidebar.
+4. Review the generated label, card title, card text, and X caption — edit any field by hand if you want (it locks automatically so future saves won't overwrite it), then use the **Copy**, **Copy all**, or **Open on X** buttons.
+
 ---
 
 ## 🧑‍💻 For Developers
@@ -90,12 +98,17 @@ On the same settings page:
 - **Database Options:**
   - `urlshbym_enabled_post_types`
   - `urlshbym_enabled_taxonomies`
+  - `urlshbym_social_enabled_post_types` — post types with the Social Kit panel enabled (empty by default).
 - **Meta Keys:**
   - `_urlshbym_short_code` on posts
   - `_urlshbym_short_code` on terms (taxonomies)
+  - `_urlshbym_social_label`, `_urlshbym_social_card_title`, `_urlshbym_social_card_text`, `_urlshbym_social_caption_x`, `_urlshbym_social_hashtags`, `_urlshbym_social_locked`, `_urlshbym_social_source_hash`, `_urlshbym_social_version` on posts (Social Kit, all `show_in_rest`).
+  - `_urlshbym_social_subject` and `_urlshbym_social_hook` — optional meta you can set yourself to override the card title base and the caption's opening line.
 - **Database Table:** `{$wpdb->prefix}urlshbym_short_urls` (created on activation to store `short_code -> object` mappings).
 - **Main Hooks:**
   - `urlshbym_short_url_clicked` — action fired whenever a short URL is accessed, receiving the `$short_code` and the internal record ID.
+- **Social Kit Filters** (all optional):
+  - `urlshbym_social_stopwords`, `urlshbym_social_cta_trim_list`, `urlshbym_social_cta_map`, `urlshbym_social_label_map`, `urlshbym_social_networks` — see `includes/social/class-social-config.php` for defaults and signatures.
 - **Rewrite Rules:** Short URLs are resolved via rewrite rule to `index.php?urlshbym_short={code}`, allowing structures like `yoursite.com/abc12`.
 
 These details ensure the plugin is safe to extend in complex environments, avoiding conflicts with other plugins and themes.

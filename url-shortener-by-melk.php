@@ -3,7 +3,7 @@
  * Plugin Name: URL Shortener by Melk
  * Plugin URI: https://github.com/Melksedeque/plugin-url-shortener-wordpress
  * Description: Create short URLs for posts, pages, categories, tags, and custom post types in your WordPress.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Melksedeque Silva
  * Author URI: https://github.com/Melksedeque
  * License: GPL v3 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define constantes do plugin
-define('URLSHBYM_VERSION', '1.0.0');
+define('URLSHBYM_VERSION', '1.1.0');
 define('URLSHBYM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('URLSHBYM_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('URLSHBYM_PLUGIN_FILE', __FILE__);
@@ -46,6 +46,12 @@ require_once URLSHBYM_PLUGIN_DIR . 'includes/class-admin.php';
 require_once URLSHBYM_PLUGIN_DIR . 'includes/class-shortcode-generator.php';
 require_once URLSHBYM_PLUGIN_DIR . 'includes/class-redirector.php';
 require_once URLSHBYM_PLUGIN_DIR . 'includes/class-admin-columns.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-social-config.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-text-utils.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-social-counter.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/social/interface-generator.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-rule-generator.php';
+require_once URLSHBYM_PLUGIN_DIR . 'includes/social/class-social-kit.php';
 
 // Hook de ativação
 register_activation_hook(__FILE__, ['Melk\\UrlShortenerByMelk\\URL_Shortener', 'activate']);

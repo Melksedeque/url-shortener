@@ -1,0 +1,18 @@
+.urlshbym-social-field {
+	margin-bottom: 16px;
+}
+
+.urlshbym-social-field-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 4px;
+	font-size: 12px;
+}
+
+.urlshbym-social-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 12px;
+}

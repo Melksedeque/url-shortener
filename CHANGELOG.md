@@ -5,6 +5,32 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2026-10-08
+
+### ✨ Social Kit (Beta)
+
+#### Adicionado
+- **Geração Automática de Conteúdo Social**
+  - Rótulo, título de card, texto de card e legenda do X (Twitter) gerados por regras a partir do título, resumo, categoria e link curto do post
+  - Contagem ponderada de caracteres do X (URL = 23, emoji = 2), com corte automático respeitando o limite de 280 caracteres sem nunca cortar o link
+  - Regeneração automática ao editar o post, exceto quando o conteúdo foi travado manualmente
+
+- **Painel no Editor (Gutenberg)**
+  - Painel lateral "Social Kit" com os campos gerados, contador de caracteres e botão de copiar por campo
+  - Edição manual trava o campo automaticamente (`_urlshbym_social_locked`) para não ser sobrescrito
+  - Botões "Regenerar", "Copiar tudo" e "Abrir no X" (intent de postagem pré-preenchido, sem API)
+
+- **Configurações**
+  - Nova seção "Social Kit (Beta)" em Configurações > URL Shortener para escolher quais tipos de conteúdo recebem o painel
+
+- **Extensibilidade**
+  - Filtros `urlshbym_social_stopwords`, `urlshbym_social_cta_trim_list`, `urlshbym_social_cta_map`, `urlshbym_social_label_map` e `urlshbym_social_networks` para qualquer site customizar rótulos, CTAs e limites sem editar código
+  - Arquitetura em `includes/social/` com interface `Generator_Interface`, pronta para novas redes sociais e, no futuro, um gerador por IA
+
+#### Observações
+- Requer WordPress 5.3+ (API de hooks do `wp.data` usada no painel do editor); `Requires at least` atualizado de 5.0 para 5.3.
+- Feature 100% opt-in: nenhum post type recebe o Social Kit até ser habilitado nas configurações.
+
 ## [1.0.0] - 2026-01-08
 
 ### 🎉 Lançamento Inicial

@@ -9,16 +9,16 @@ if (!defined('ABSPATH')) {
     
     <div class="urlshbym-admin-container">
         
+        <form method="post" action="">
+	        <?php wp_nonce_field('urlshbym_settings_nonce'); ?>
+
         <!-- Seção de Configurações -->
         <div class="urlshbym-card">
             <h2><?php esc_html_e('Automatic Generation Settings', 'url-shortener-by-melk'); ?></h2>
             <p class="description">
                 <?php esc_html_e('Select the content types that should have short URLs automatically generated when published.', 'url-shortener-by-melk'); ?>
             </p>
-            
-            <form method="post" action="">
-		        <?php wp_nonce_field('urlshbym_settings_nonce'); ?>
-                
+
                 <table class="form-table">
                     <tr>
                         <th scope="row">
@@ -74,17 +74,54 @@ if (!defined('ABSPATH')) {
                         </td>
                     </tr>
                 </table>
-                
-                <p class="submit">
-				<input 
-					type="submit" 
-					name="urlshbym_save_settings" 
-                        class="button button-primary" 
-                        value="<?php esc_attr_e('Save Settings', 'url-shortener-by-melk'); ?>"
-                    >
-                </p>
-            </form>
         </div>
+
+        <!-- Seção do Social Kit -->
+        <div class="urlshbym-card">
+            <h2><?php esc_html_e('Social Kit (Beta)', 'url-shortener-by-melk'); ?></h2>
+            <p class="description">
+                <?php esc_html_e('Automatically generate a card label, card title, card text, and a ready-to-post X (Twitter) caption for the content types below, based on the post title, excerpt, category, and its short URL.', 'url-shortener-by-melk'); ?>
+            </p>
+
+                <table class="form-table">
+                    <tr>
+                        <th scope="row">
+                            <?php esc_html_e('Post Types', 'url-shortener-by-melk'); ?>
+                        </th>
+                        <td>
+                            <fieldset>
+                                <?php foreach ($post_types as $post_type) : ?>
+                                    <?php if ($post_type->name === 'attachment') continue; ?>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            name="urlshbym_social_enabled_post_types[]"
+                                            value="<?php echo esc_attr($post_type->name); ?>"
+                                            <?php checked(in_array($post_type->name, $social_enabled_post_types)); ?>
+                                        >
+                                        <?php echo esc_html($post_type->label); ?>
+                                        <span style="color: #666;">(<?php echo esc_html($post_type->name); ?>)</span>
+                                    </label>
+                                    <br>
+                                <?php endforeach; ?>
+                            </fieldset>
+                            <p class="description">
+                                <?php esc_html_e('A "Social Kit" panel will appear in the block editor for these content types once they have a short URL.', 'url-shortener-by-melk'); ?>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+        </div>
+
+                <p class="submit">
+			<input
+				type="submit"
+				name="urlshbym_save_settings"
+                    class="button button-primary"
+                    value="<?php esc_attr_e('Save Settings', 'url-shortener-by-melk'); ?>"
+                >
+            </p>
+        </form>
 
         <!-- Seção de Geração Retroativa -->
         <div class="urlshbym-card">
