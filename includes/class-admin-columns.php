@@ -122,14 +122,14 @@ class Admin_Columns {
 			'urlshbym-columns-css',
 			URLSHBYM_PLUGIN_URL . 'assets/css/columns.css',
 			[],
-			URLSHBYM_VERSION
+			urlshbym_asset_version('assets/css/columns.css')
 		);
 
 		wp_enqueue_script(
 			'urlshbym-columns-js',
 			URLSHBYM_PLUGIN_URL . 'assets/js/columns.js',
 			['jquery'],
-			URLSHBYM_VERSION,
+			urlshbym_asset_version('assets/js/columns.js'),
 			true
 		);
 

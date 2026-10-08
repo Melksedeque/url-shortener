@@ -152,32 +152,51 @@ if (!defined('ABSPATH')) {
             </ul>
         </div>
 
-        <!-- Seção de outros plugins by Melk -->
-        <?php
-        $urlshbym_other_plugins = [
-            [
-                'name' => 'Social Kit by Melk',
-                'description' => __('Automatically turns each post into a ready-to-use card label, card title, card text, and social caption. Works standalone; when URL Shortener by Melk is also active, it uses the short URL in the caption automatically.', 'url-shortener-by-melk'),
-                'url' => 'https://github.com/Melksedeque/social-kit-by-melk',
-            ],
-        ];
-        ?>
-        <?php if (!empty($urlshbym_other_plugins)) : ?>
-            <div class="urlshbym-card urlshbym-info-card">
-                <h2><?php esc_html_e('Other Plugins by Melk', 'url-shortener-by-melk'); ?></h2>
-                <ul>
-                    <?php foreach ($urlshbym_other_plugins as $urlshbym_other_plugin) : ?>
-                        <li>
-                            <strong><?php echo esc_html($urlshbym_other_plugin['name']); ?></strong>
-                            &mdash; <?php echo esc_html($urlshbym_other_plugin['description']); ?>
-                            <a href="<?php echo esc_url($urlshbym_other_plugin['url']); ?>" target="_blank" rel="noopener noreferrer">
-                                <?php esc_html_e('Learn more', 'url-shortener-by-melk'); ?>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
+        <!-- Danger Zone -->
+        <div class="urlshbym-card urlshbym-danger-zone">
+            <h2><?php esc_html_e('Danger Zone', 'url-shortener-by-melk'); ?></h2>
+
+            <div class="urlshbym-danger-item">
+                <div class="urlshbym-danger-text">
+                    <strong><?php esc_html_e('Delete all short URLs', 'url-shortener-by-melk'); ?></strong>
+                    <p class="description">
+                        <?php esc_html_e('Removes every short URL created so far. Your settings are kept, and you can generate them again with the buttons above. Codes are based on the content ID, so regenerating creates the same codes in almost all cases.', 'url-shortener-by-melk'); ?>
+                    </p>
+                </div>
+                <button type="button" id="urlshbym-delete-all" class="button urlshbym-button-danger">
+                    <?php esc_html_e('Delete all short URLs', 'url-shortener-by-melk'); ?>
+                </button>
             </div>
-        <?php endif; ?>
+
+            <div id="urlshbym-delete-all-result" style="display: none;"></div>
+
+            <form method="post" action="" class="urlshbym-danger-item">
+                <?php wp_nonce_field('urlshbym_danger_nonce'); ?>
+                <div class="urlshbym-danger-text">
+                    <strong><?php esc_html_e('When the plugin is deleted', 'url-shortener-by-melk'); ?></strong>
+                    <p>
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="urlshbym_delete_data_on_uninstall"
+                                value="1"
+                                <?php checked(1, $delete_data_on_uninstall); ?>
+                            >
+                            <?php esc_html_e('Delete all plugin data (short URLs table, settings and stored codes)', 'url-shortener-by-melk'); ?>
+                        </label>
+                    </p>
+                    <p class="description">
+                        <?php esc_html_e('Only takes effect when you delete the plugin from the Plugins screen. Leave unchecked to keep your data if you reinstall the plugin.', 'url-shortener-by-melk'); ?>
+                    </p>
+                </div>
+                <input
+                    type="submit"
+                    name="urlshbym_save_danger"
+                    class="button"
+                    value="<?php esc_attr_e('Save', 'url-shortener-by-melk'); ?>"
+                >
+            </form>
+        </div>
 
     </div>
 </div>

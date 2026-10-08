@@ -50,7 +50,7 @@
 					error: function() {
 						$result
 							.addClass('error')
-							.html('<strong>' + urlshbymAdmin.strings.error + '</strong><br>Erro ao processar a requisição.')
+							.html('<strong>' + urlshbymAdmin.strings.error + '</strong><br>' + urlshbymAdmin.strings.requestError)
                         .fadeIn();
                 },
                 complete: function() {
@@ -64,6 +64,52 @@
             });
         });
         
+        // Danger Zone: apagar todas as URLs curtas
+        $('#urlshbym-delete-all').on('click', function(e) {
+            e.preventDefault();
+
+            const $button = $(this);
+            const $result = $('#urlshbym-delete-all-result');
+
+            if ($button.prop('disabled') || !window.confirm(urlshbymAdmin.strings.confirmDelete)) {
+                return;
+            }
+
+            $button.prop('disabled', true);
+            $result.hide().removeClass('success error');
+
+            $.ajax({
+                url: urlshbymAdmin.ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'urlshbym_delete_all',
+                    nonce: urlshbymAdmin.deleteNonce
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $result
+                            .addClass('success')
+                            .html('<strong>' + urlshbymAdmin.strings.deleted + '</strong><br>' + response.data.message)
+                            .fadeIn();
+                    } else {
+                        $result
+                            .addClass('error')
+                            .html('<strong>' + urlshbymAdmin.strings.deleteError + '</strong><br>' + response.data.message)
+                            .fadeIn();
+                    }
+                },
+                error: function() {
+                    $result
+                        .addClass('error')
+                        .html('<strong>' + urlshbymAdmin.strings.deleteError + '</strong><br>' + urlshbymAdmin.strings.requestError)
+                        .fadeIn();
+                },
+                complete: function() {
+                    $button.prop('disabled', false);
+                }
+            });
+        });
+
     });
 
 })(jQuery);

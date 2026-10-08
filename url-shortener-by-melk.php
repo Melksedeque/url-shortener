@@ -4,11 +4,14 @@
  * Plugin URI: https://github.com/Melksedeque/plugin-url-shortener-wordpress
  * Description: Create short URLs for posts, pages, categories, tags, and custom post types in your WordPress.
  * Version: 1.0.1
+ * Requires at least: 5.0
+ * Requires PHP: 7.4
  * Author: Melksedeque Silva
  * Author URI: https://github.com/Melksedeque
  * License: GPL v3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: url-shortener-by-melk
+ * Domain Path: /languages
  */
 
 // Evita acesso direto
@@ -18,6 +21,7 @@ if (!defined('ABSPATH')) {
 
 // Define constantes do plugin
 define('URLSHBYM_VERSION', '1.0.1');
+define('URLSHBYM_DB_VERSION', '1.0.1');
 define('URLSHBYM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('URLSHBYM_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('URLSHBYM_PLUGIN_FILE', __FILE__);
@@ -50,8 +54,18 @@ require_once URLSHBYM_PLUGIN_DIR . 'includes/class-admin-columns.php';
 // Hook de ativação
 register_activation_hook(__FILE__, ['Melk\\UrlShortenerByMelk\\URL_Shortener', 'activate']);
 
-// Hook de desativação
-register_deactivation_hook(__FILE__, ['Melk\\UrlShortenerByMelk\\URL_Shortener', 'deactivate']);
+// Versão de um asset (CSS/JS): inclui a data de modificação do arquivo para
+// que o navegador nunca sirva uma cópia antiga em cache após uma atualização.
+function urlshbym_asset_version($relative_path) {
+    $file = URLSHBYM_PLUGIN_DIR . ltrim($relative_path, '/');
+    return file_exists($file) ? URLSHBYM_VERSION . '.' . filemtime($file) : URLSHBYM_VERSION;
+}
+
+// Carrega as traduções (arquivos .mo em /languages)
+function urlshbym_load_textdomain() {
+    load_plugin_textdomain('url-shortener-by-melk', false, dirname(plugin_basename(__FILE__)) . '/languages');
+}
+add_action('init', 'urlshbym_load_textdomain');
 
 // Inicializa o plugin
 function urlshbym_init() {

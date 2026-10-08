@@ -12,6 +12,7 @@ class Admin {
 		add_action('admin_init', [$this, 'register_settings']);
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
 		add_action('wp_ajax_urlshbym_generate_bulk', [$this, 'ajax_generate_bulk']);
+		add_action('wp_ajax_urlshbym_delete_all', [$this, 'ajax_delete_all']);
     }
 
     public function add_admin_menu() {
@@ -46,24 +47,30 @@ class Admin {
 			'urlshbym-admin-css',
 			URLSHBYM_PLUGIN_URL . 'assets/css/admin.css',
 			[],
-			URLSHBYM_VERSION
+			urlshbym_asset_version('assets/css/admin.css')
 		);
 
 		wp_enqueue_script(
 			'urlshbym-admin-js',
 			URLSHBYM_PLUGIN_URL . 'assets/js/admin.js',
 			['jquery'],
-			URLSHBYM_VERSION,
+			urlshbym_asset_version('assets/js/admin.js'),
 			true
 		);
 
 		wp_localize_script('urlshbym-admin-js', 'urlshbymAdmin', [
             'ajaxurl' => admin_url('admin-ajax.php'),
 			'nonce' => wp_create_nonce('urlshbym_generate_bulk'),
+			'deleteNonce' => wp_create_nonce('urlshbym_delete_all'),
             'strings' => [
                 'generating' => __('Generating short URLs...', 'url-shortener-by-melk'),
                 'success' => __('Short URLs generated successfully!', 'url-shortener-by-melk'),
                 'error' => __('Error generating short URLs.', 'url-shortener-by-melk'),
+                'confirmDelete' => __('Delete ALL short URLs? Links already shared will stop working until you generate them again. This cannot be undone.', 'url-shortener-by-melk'),
+                'deleting' => __('Deleting short URLs...', 'url-shortener-by-melk'),
+                'deleted' => __('Short URLs deleted.', 'url-shortener-by-melk'),
+                'deleteError' => __('Error deleting short URLs.', 'url-shortener-by-melk'),
+                'requestError' => __('Error processing the request.', 'url-shortener-by-melk'),
             ]
         ]);
     }
@@ -75,8 +82,8 @@ class Admin {
 
         // Salva configurações se o formulário foi enviado
 		if (isset($_POST['urlshbym_save_settings']) && check_admin_referer('urlshbym_settings_nonce')) {
-			$post_types = isset($_POST['urlshbym_enabled_post_types']) ? array_map('sanitize_text_field', wp_unslash($_POST['urlshbym_enabled_post_types'])) : [];
-			$taxonomies = isset($_POST['urlshbym_enabled_taxonomies']) ? array_map('sanitize_text_field', wp_unslash($_POST['urlshbym_enabled_taxonomies'])) : [];
+			$post_types = isset($_POST['urlshbym_enabled_post_types']) ? array_map('sanitize_text_field', (array) wp_unslash($_POST['urlshbym_enabled_post_types'])) : [];
+			$taxonomies = isset($_POST['urlshbym_enabled_taxonomies']) ? array_map('sanitize_text_field', (array) wp_unslash($_POST['urlshbym_enabled_taxonomies'])) : [];
 
 			update_option('urlshbym_enabled_post_types', $post_types);
 			update_option('urlshbym_enabled_taxonomies', $taxonomies);
@@ -84,8 +91,16 @@ class Admin {
             echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Settings saved successfully!', 'url-shortener-by-melk') . '</p></div>';
         }
 
+		// Salva a opção de remoção de dados (Danger Zone)
+		if (isset($_POST['urlshbym_save_danger']) && check_admin_referer('urlshbym_danger_nonce')) {
+			update_option('urlshbym_delete_data_on_uninstall', isset($_POST['urlshbym_delete_data_on_uninstall']) ? 1 : 0);
+
+			echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Settings saved successfully!', 'url-shortener-by-melk') . '</p></div>';
+		}
+
 		$enabled_post_types = get_option('urlshbym_enabled_post_types', ['post', 'page']);
 		$enabled_taxonomies = get_option('urlshbym_enabled_taxonomies', ['category', 'post_tag']);
+		$delete_data_on_uninstall = (int) get_option('urlshbym_delete_data_on_uninstall', 0);
 
         // Obtém todos os post types públicos
         $post_types = get_post_types(['public' => true], 'objects');
@@ -113,10 +128,12 @@ class Admin {
         $generator = new Shortcode_Generator();
         $generated = 0;
 
-        if ($type === 'post_type') {
+        if ($type === 'post_type' && post_type_exists($name)) {
             $generated = $generator->generate_bulk_for_posts($name);
-        } elseif ($type === 'taxonomy') {
+        } elseif ($type === 'taxonomy' && taxonomy_exists($name)) {
             $generated = $generator->generate_bulk_for_terms($name);
+        } else {
+            wp_send_json_error(['message' => __('Invalid parameters.', 'url-shortener-by-melk')]);
         }
 
         wp_send_json_success([
@@ -126,6 +143,26 @@ class Admin {
                 $generated
             ),
             'count' => $generated
+        ]);
+    }
+
+    public function ajax_delete_all() {
+        check_ajax_referer('urlshbym_delete_all', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => __('Permission denied.', 'url-shortener-by-melk')]);
+        }
+
+        $generator = new Shortcode_Generator();
+        $deleted = $generator->delete_all();
+
+        wp_send_json_success([
+            'message' => sprintf(
+                /* translators: %d: Number of deleted short URLs */
+                _n('%d short URL was deleted.', '%d short URLs were deleted.', $deleted, 'url-shortener-by-melk'),
+                $deleted
+            ),
+            'count' => $deleted
         ]);
     }
 }

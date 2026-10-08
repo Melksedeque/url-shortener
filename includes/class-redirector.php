@@ -6,111 +6,97 @@ if (!defined('ABSPATH')) {
 }
 
 class Redirector {
-    
-    /**
-     * Adiciona regras de rewrite para capturar URLs curtas
-     */
-	public function add_rewrite_rules() {
-        // Captura URLs com 5-7 caracteres alfanuméricos na raiz
-		add_rewrite_rule(
-			'^([0-9a-zA-Z]{5,7})/?$',
-			'index.php?urlshbym_short=$matches[1]',
-			'top'
-		);
-        
-        // Registra a query var
-        add_filter('query_vars', [$this, 'add_query_vars']);
-    }
 
     /**
-     * Adiciona variável de query personalizada
+     * Resolve URLs curtas sem rewrite rules.
+     *
+     * Só entra em ação quando o WordPress já concluiu que a requisição seria
+     * um 404. Assim, páginas, posts e termos reais (ex.: /sobre) nunca são
+     * interceptados por um código curto com o mesmo formato.
      */
-	public function add_query_vars($vars) {
-		$vars[] = 'urlshbym_short';
-        return $vars;
-    }
-
-    /**
-     * Gerencia o redirecionamento das URLs curtas
-     */
-	public function handle_redirect() {
-		$short_code = get_query_var('urlshbym_short');
-        
-        if (empty($short_code)) {
+    public function handle_redirect() {
+        if (!is_404()) {
             return;
         }
 
-		// Tenta buscar do cache primeiro
-		$cache_key = 'urlshbym_short_' . $short_code;
-		$result = wp_cache_get($cache_key, 'urlshbym_cache');
-		
-		if (false === $result) {
-			global $wpdb;
-			
-			// Busca o código curto na tabela
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-			$result = $wpdb->get_row($wpdb->prepare(
-				"SELECT * FROM {$wpdb->prefix}urlshbym_short_urls WHERE short_code = %s",
-				$short_code
-			));
-			
-			// Salva no cache por 1 hora
-			if ($result) {
-				wp_cache_set($cache_key, $result, 'urlshbym_cache', HOUR_IN_SECONDS);
-			}
+        global $wp;
+
+        $path = isset($wp->request) ? trim($wp->request, '/') : '';
+
+        // Códigos curtos têm 5-7 caracteres alfanuméricos, na raiz do site
+        if (!preg_match('/^[0-9a-zA-Z]{5,7}$/', $path)) {
+            return;
         }
-        
+
+        $result = $this->get_record($path);
         if (!$result) {
-            // Se não encontrou, retorna 404
-            global $wp_query;
-            $wp_query->set_404();
-            status_header(404);
             return;
         }
-        
-        // Determina a URL de destino baseado no tipo
-        $destination_url = '';
-        
-        if ($result->object_type === 'post') {
-            $destination_url = get_permalink((int) $result->object_id);
-        } elseif ($result->object_type === 'term') {
-            $destination_url = get_term_link((int) $result->object_id);
+
+        $destination_url = $this->get_destination_url($result);
+        if (empty($destination_url) || is_wp_error($destination_url)) {
+            return;
         }
-        
-        // Se encontrou uma URL válida, redireciona
-        if (!empty($destination_url) && !is_wp_error($destination_url)) {
-            // Aqui virá a lógica de tracking de cliques nas versões futuras
-            $this->track_click($result->id, $short_code);
-            
-            // Redireciona com código 301 (permanente)
-            // wp_safe_redirect é preferível para segurança
-            wp_safe_redirect($destination_url, 301);
-            exit;
-        } else {
-            // Se a URL de destino não é válida, retorna 404
-            global $wp_query;
-            $wp_query->set_404();
-            status_header(404);
-        }
+
+        /**
+         * Disparado quando uma URL curta é acessada.
+         *
+         * @param string $short_code Código curto.
+         * @param int    $id         ID do registro na tabela do plugin.
+         */
+        do_action('urlshbym_short_url_clicked', $path, (int) $result->id);
+
+        // 301 (permanente) para SEO; wp_safe_redirect por segurança
+        wp_safe_redirect($destination_url, 301);
+        exit;
     }
 
     /**
-     * Tracking de cliques (preparado para implementação futura)
+     * Busca o registro do código curto (com cache).
      */
-	private function track_click($id, $short_code) {
-        // Implementação futura: salvar cliques em tabela separada
-        // Por enquanto, apenas incrementa um contador no post meta
-		global $wpdb;
-		$table_name = $wpdb->prefix . 'urlshbym_short_urls';
-        
-        // Futuramente, criar tabela de clicks com informações como:
-        // - IP do visitante
-        // - User agent
-        // - Referrer
-        // - Data/hora do acesso
-        // - Geolocalização
-        
-		// Por enquanto, só registramos que houve acesso
-		do_action('urlshbym_short_url_clicked', $short_code, $id);
+    private function get_record($short_code) {
+        global $wpdb;
+
+        $cache_key = 'urlshbym_short_' . $short_code;
+        $result    = wp_cache_get($cache_key, 'urlshbym_cache');
+
+        if (false !== $result) {
+            return $result;
+        }
+
+        $table = Shortcode_Generator::table_name();
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        $result = $wpdb->get_row($wpdb->prepare(
+            "SELECT * FROM {$table} WHERE short_code = %s",
+            $short_code
+        ));
+
+        if ($result) {
+            wp_cache_set($cache_key, $result, 'urlshbym_cache', HOUR_IN_SECONDS);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Determina a URL de destino conforme o tipo do objeto.
+     */
+    private function get_destination_url($record) {
+        $object_id = (int) $record->object_id;
+
+        if ($record->object_type === 'post') {
+            // Rascunhos, lixeira e posts privados não devem ser expostos
+            if (get_post_status($object_id) !== 'publish') {
+                return '';
+            }
+            return get_permalink($object_id);
+        }
+
+        if ($record->object_type === 'term') {
+            return get_term_link($object_id);
+        }
+
+        return '';
     }
 }

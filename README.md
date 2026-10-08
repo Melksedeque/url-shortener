@@ -19,7 +19,7 @@
 - 🎯 **Comprehensive Support:** Works with Posts, Pages, Categories, Tags, and Custom Post Types.
 - 📋 **Quick Copy:** "Copy" button directly in the post/term listing in the admin panel.
 - ⚡ **Bulk Generation:** Tool to generate short URLs for old content with one click.
-- 🚀 **Performance:** Fast redirection using native WordPress rewrite rules.
+- 🚀 **Performance:** Fast redirection resolved only on would-be 404s, so your pages and posts are never affected.
 - 🔒 **Secure:** Validated, sanitized, and escaped code strictly following WordPress standards.
 
 ---
@@ -101,7 +101,7 @@ This plugin focuses only on short URLs. For automatic social media content (card
 - **Main Hooks:**
   - `urlshbym_short_url_clicked` — action fired whenever a short URL is accessed, receiving the `$short_code` and the internal record ID.
 - **Integration Helper:** `urlshbym_get_short_url_for_post( $post_id )` — a global function other plugins can call via `function_exists()` to reuse a post's short URL, with no hard dependency in either direction.
-- **Rewrite Rules:** Short URLs are resolved via rewrite rule to `index.php?urlshbym_short={code}`, allowing structures like `yoursite.com/abc12`.
+- **Resolution:** Short URLs (`yoursite.com/abc12`) are resolved on `template_redirect` only when WordPress would otherwise return a 404, so real pages, posts and terms always take priority. No rewrite rules are registered.
 
 These details ensure the plugin is safe to extend in complex environments, avoiding conflicts with other plugins and themes.
 
