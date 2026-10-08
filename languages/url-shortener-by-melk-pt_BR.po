@@ -1,0 +1,183 @@
+# URL Shortener by Melk translation.
+# Copyright (C) Melksedeque Silva
+# This file is distributed under the GPLv3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: URL Shortener by Melk 1.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/url-shortener-by-melk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: url-shortener-by-melk\n"
+
+#: admin/settings-page.php:17
+msgid "Automatic Generation Settings"
+msgstr "Configurações de geração automática"
+
+#: admin/settings-page.php:19
+msgid "Select the content types that should have short URLs automatically generated when published."
+msgstr "Selecione os tipos de conteúdo que devem ter URLs curtas geradas automaticamente quando publicados."
+
+#: admin/settings-page.php:25 admin/settings-page.php:97
+msgid "Post Types"
+msgstr "Tipos de conteúdo"
+
+#: admin/settings-page.php:45
+msgid "Short URLs will be automatically created when new posts of these types are published."
+msgstr "As URLs curtas serão criadas automaticamente quando novos conteúdos desses tipos forem publicados."
+
+#: admin/settings-page.php:52 admin/settings-page.php:118
+msgid "Taxonomies"
+msgstr "Taxonomias"
+
+#: admin/settings-page.php:72
+msgid "Short URLs will be automatically created when new terms of these taxonomies are created."
+msgstr "As URLs curtas serão criadas automaticamente quando novos termos dessas taxonomias forem criados."
+
+#: admin/settings-page.php:84
+msgid "Save Settings"
+msgstr "Salvar configurações"
+
+#: admin/settings-page.php:91
+msgid "Generate Short URLs for Existing Content"
+msgstr "Gerar URLs curtas para conteúdo existente"
+
+#: admin/settings-page.php:93
+msgid "Use the buttons below to generate short URLs for all published content that does not yet have a short URL."
+msgstr "Use os botões abaixo para gerar URLs curtas para todo o conteúdo publicado que ainda não tem uma URL curta."
+
+#: admin/settings-page.php:145
+msgid "How it Works"
+msgstr "Como funciona"
+
+#: admin/settings-page.php:147
+msgid "Short URLs are generated using Base62 (uppercase letters, lowercase letters, and numbers)."
+msgstr "As URLs curtas são geradas usando Base62 (letras maiúsculas, letras minúsculas e números)."
+
+#: admin/settings-page.php:148
+msgid "Each short URL is 5-7 characters long and is based on the content ID, ensuring consistency."
+msgstr "Cada URL curta tem de 5 a 7 caracteres e é baseada no ID do conteúdo, garantindo consistência."
+
+#: admin/settings-page.php:149
+msgid "Short URLs appear at the root of your domain: example.com/abc123"
+msgstr "As URLs curtas ficam na raiz do seu domínio: exemplo.com.br/abc123"
+
+#: admin/settings-page.php:150
+msgid "You can copy short URLs directly from the post and term listing tables."
+msgstr "Você pode copiar as URLs curtas diretamente nas listagens de posts e termos."
+
+#: admin/settings-page.php:151
+msgid "All redirects use 301 code (permanent) for SEO."
+msgstr "Todos os redirecionamentos usam o código 301 (permanente) para SEO."
+
+#: admin/settings-page.php:157
+msgid "Danger Zone"
+msgstr "Zona de perigo"
+
+#: admin/settings-page.php:161 admin/settings-page.php:167
+msgid "Delete all short URLs"
+msgstr "Apagar todas as URLs curtas"
+
+#: admin/settings-page.php:163
+msgid "Removes every short URL created so far. Your settings are kept, and you can generate them again with the buttons above. Codes are based on the content ID, so regenerating creates the same codes in almost all cases."
+msgstr "Remove todas as URLs curtas criadas até agora. Suas configurações são mantidas e você pode gerá-las novamente com os botões acima. Os códigos são baseados no ID do conteúdo, então gerar de novo cria os mesmos códigos na grande maioria dos casos."
+
+#: admin/settings-page.php:176
+msgid "When the plugin is deleted"
+msgstr "Quando o plugin for excluído"
+
+#: admin/settings-page.php:185
+msgid "Delete all plugin data (short URLs table, settings and stored codes)"
+msgstr "Apagar todos os dados do plugin (tabela de URLs curtas, configurações e códigos armazenados)"
+
+#: admin/settings-page.php:189
+msgid "Only takes effect when you delete the plugin from the Plugins screen. Leave unchecked to keep your data if you reinstall the plugin."
+msgstr "Só tem efeito quando você exclui o plugin na tela de Plugins. Deixe desmarcado para manter seus dados caso reinstale o plugin."
+
+#: admin/settings-page.php:196
+msgid "Save"
+msgstr "Salvar"
+
+#: includes/class-admin-columns.php:37 includes/class-admin-columns.php:70
+msgid "Short URL"
+msgstr "URL curta"
+
+#: includes/class-admin-columns.php:52 includes/class-admin-columns.php:85
+msgid "Not generated"
+msgstr "Não gerada"
+
+#: includes/class-admin-columns.php:104 includes/class-admin-columns.php:138
+msgid "Copy URL"
+msgstr "Copiar URL"
+
+#: includes/class-admin-columns.php:109 includes/class-admin-columns.php:137
+msgid "Copied!"
+msgstr "Copiado!"
+
+#: includes/class-admin.php:20 includes/class-admin.php:21
+msgid "URL Shortener"
+msgstr "Encurtador de URL"
+
+#: includes/class-admin.php:66
+msgid "Generating short URLs..."
+msgstr "Gerando URLs curtas..."
+
+#: includes/class-admin.php:67
+msgid "Short URLs generated successfully!"
+msgstr "URLs curtas geradas com sucesso!"
+
+#: includes/class-admin.php:68
+msgid "Error generating short URLs."
+msgstr "Erro ao gerar URLs curtas."
+
+#: includes/class-admin.php:69
+msgid "Delete ALL short URLs? Links already shared will stop working until you generate them again. This cannot be undone."
+msgstr "Apagar TODAS as URLs curtas? Os links já compartilhados deixarão de funcionar até que você os gere novamente. Esta ação não pode ser desfeita."
+
+#: includes/class-admin.php:70
+msgid "Deleting short URLs..."
+msgstr "Apagando URLs curtas..."
+
+#: includes/class-admin.php:71
+msgid "Short URLs deleted."
+msgstr "URLs curtas apagadas."
+
+#: includes/class-admin.php:72
+msgid "Error deleting short URLs."
+msgstr "Erro ao apagar URLs curtas."
+
+#: includes/class-admin.php:73
+msgid "Error processing the request."
+msgstr "Erro ao processar a requisição."
+
+#: includes/class-admin.php:91 includes/class-admin.php:98
+msgid "Settings saved successfully!"
+msgstr "Configurações salvas com sucesso!"
+
+#: includes/class-admin.php:118 includes/class-admin.php:153
+msgid "Permission denied."
+msgstr "Permissão negada."
+
+#: includes/class-admin.php:125 includes/class-admin.php:136
+msgid "Invalid parameters."
+msgstr "Parâmetros inválidos."
+
+#: includes/class-admin.php:142
+msgid "%d short URLs were generated successfully!"
+msgstr "%d URLs curtas foram geradas com sucesso!"
+
+#: includes/class-admin.php:162
+msgid "%d short URL was deleted."
+msgid_plural "%d short URLs were deleted."
+msgstr[0] "%d URL curta foi apagada."
+msgstr[1] "%d URLs curtas foram apagadas."
+
+#: url-shortener-by-melk.php:75
+msgid "View plugin documentation"
+msgstr "Ver documentação do plugin"
+
+#: url-shortener-by-melk.php:75
+msgid "Documentation"
+msgstr "Documentação"
